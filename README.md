@@ -1,7 +1,7 @@
-# Repository that implements the schemes for the paper `Signature Schemes and Anonymous Credentials from Bilinear Maps`
+# Repository that implements the schemes for the paper Signature Schemes and Anonymous Credentials from Bilinear Maps
 
-##Disclaimer
+## Disclaimer
 This is a personal project. Avoid using this library in production as it has not been audited.
 
-##Dependencies
+## Dependencies
 [miracl/core](https://github.com/miracl/core): Building instructions can be found in the official repo

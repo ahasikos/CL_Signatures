@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CL_Signatures.iml" filepath="$PROJECT_DIR$/.idea/CL_Signatures.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/cl_signatures.iml" filepath="$PROJECT_DIR$/.idea/cl_signatures.iml" />
     </modules>
   </component>
 </project>
