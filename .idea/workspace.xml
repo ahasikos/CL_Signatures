@@ -3,6 +3,7 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="cl_signatures" targetName="test_cl_signatures" />
+      <config projectName="cl_signatures" targetName="scheme_C" />
       <config projectName="cl_signatures" targetName="scheme_A" />
       <config projectName="cl_signatures" targetName="scheme_B" />
     </generated>
@@ -14,9 +15,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scheme_A.c" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_scheme_B.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_cl_signatures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_cl_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_cl_signatures.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,6 +79,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="scheme_C" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="scheme_C" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="test_cl_signatures" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="test_cl_signatures" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cl_signatures" RUN_TARGET_NAME="test_cl_signatures">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -89,6 +97,7 @@
     <list>
       <item itemvalue="CMake Application.scheme_A" />
       <item itemvalue="CMake Application.scheme_B" />
+      <item itemvalue="CMake Application.scheme_C" />
       <item itemvalue="CMake Application.test_cl_signatures" />
     </list>
   </component>
@@ -105,7 +114,7 @@
       <workItem from="1625760266806" duration="124000" />
       <workItem from="1625761188386" duration="62000" />
       <workItem from="1625814262176" duration="273000" />
-      <workItem from="1625833004945" duration="2983000" />
+      <workItem from="1625833004945" duration="7013000" />
     </task>
     <servers />
   </component>
@@ -113,6 +122,15 @@
     <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/test_cl_signatures.c</url>
+          <line>112</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="T" />
