@@ -7,23 +7,9 @@
 #include <string.h>
 #include <pair_BN254.h>
 
-void schemeA_init_sk(schemeA_secret_key *sk) {
-    memset(sk->x_mem, 0, sizeof(sk->x_mem));
-    memset(sk->y_mem, 0, sizeof(sk->y_mem));
-
-    sk->x.len = 0;
-    sk->x.max = sizeof(sk->x_mem);
-    sk->x.val = sk->x_mem;
-
-    sk->y.len = 0;
-    sk->y.max = sizeof(sk->y_mem);
-    sk->y.val = sk->y_mem;
-}
-
 void schemeA_generate_sk(schemeA_secret_key *sk, csprng *prng) {
     BIG_256_56_random(sk->x_big, prng);
     BIG_256_56_random(sk->y_big, prng);
-
 }
 
 void schemeA_generate_pk(schemeA_public_key *pk, schemeA_secret_key *sk) {
@@ -89,7 +75,7 @@ int schemeA_verify(schemeA_signature *sig, BIG_256_56 message, schemeA_public_ke
     if( (FP12_BN254_equals(&p1, &p2) == 1) &&
         (FP12_BN254_equals(&lhs, &rhs)) == 1 ){
         return 1;
-    } else {
-        return 0;
     }
+
+    return 0;
 }

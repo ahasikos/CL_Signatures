@@ -11,10 +11,6 @@
 #include <ecp2_BN254.h>
 
 typedef struct {
-    char x_mem[32];
-    char y_mem[32];
-    octet x;
-    octet y;
     BIG_256_56 x_big;
     BIG_256_56 y_big;
 } schemeA_secret_key;
@@ -30,8 +26,6 @@ typedef struct {
     ECP_BN254 b;
     ECP_BN254 c;
 }schemeA_signature;
-
-void schemeA_init_sk(schemeA_secret_key *sk);
 
 void schemeA_generate_sk(schemeA_secret_key *sk, csprng *prng);
 

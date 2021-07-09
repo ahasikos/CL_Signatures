@@ -2,8 +2,10 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="cl_signatures" targetName="cl_signatures" />
       <config projectName="cl_signatures" targetName="scheme_A" />
+      <config projectName="cl_signatures" targetName="scheme_B" />
+      <config projectName="cl_signatures" targetName="test_schemeB" />
+      <config projectName="cl_signatures" targetName="test_schemeA" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -12,7 +14,16 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="" />
+    <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/scheme_B/schemeB_signatures.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheme_B/schemeB_signatures.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_scheme_B.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_A/schemeA_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_A/schemeA_signatures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_A/schemeA_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_A/schemeA_signatures.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_scheme_A.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_scheme_A.c" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -55,13 +66,28 @@
       <recent name="$PROJECT_DIR$/scheme_A" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.cl_signatures">
-    <configuration name="cl_signatures" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="cl_signatures" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cl_signatures" RUN_TARGET_NAME="cl_signatures">
+  <component name="RunManager" selected="CMake Application.test_schemeB">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="scheme_A" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="scheme_A" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="scheme_A" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="scheme_A" CONFIG_NAME="Debug">
+    <configuration name="scheme_B" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="scheme_B" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test_schemeA" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="test_schemeA" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cl_signatures" RUN_TARGET_NAME="test_schemeA">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test_schemeB" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="test_schemeB" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cl_signatures" RUN_TARGET_NAME="test_schemeB">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -72,8 +98,10 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.cl_signatures" />
       <item itemvalue="CMake Application.scheme_A" />
+      <item itemvalue="CMake Application.scheme_B" />
+      <item itemvalue="CMake Application.test_schemeA" />
+      <item itemvalue="CMake Application.test_schemeB" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -87,6 +115,9 @@
       <workItem from="1625722966899" duration="18189000" />
       <workItem from="1625760167571" duration="86000" />
       <workItem from="1625760266806" duration="124000" />
+      <workItem from="1625761188386" duration="62000" />
+      <workItem from="1625814262176" duration="273000" />
+      <workItem from="1625833004945" duration="2580000" />
     </task>
     <servers />
   </component>
