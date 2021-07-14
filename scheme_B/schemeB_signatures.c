@@ -91,7 +91,7 @@ int schemeB_verify(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 random
     PAIR_BN254_fexp(&p6);
 
     //Verification 3
-    FP12_BN254 p7, p8, p9, p10;
+    FP12_BN254 p7, p8, p9;
 
     PAIR_BN254_ate(&p7, &pk->X, &sig->a);
     PAIR_BN254_fexp(&p7);

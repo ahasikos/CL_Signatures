@@ -78,6 +78,12 @@ void test_scheme_C(csprng *prng) {
 
     schemeC_sign(&sig, message, &sk, prng);
 
+    if(schemeC_verify(&sig, message, &pk)) {
+        printf("Success\n");
+    } else {
+        printf("Failure\n");
+    }
+
     free(z_big_buf);
     free(Z_ECP_buf);
 }

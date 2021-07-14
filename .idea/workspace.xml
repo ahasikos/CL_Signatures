@@ -15,10 +15,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_B/schemeB_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_B/schemeB_signatures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_cl_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_cl_signatures.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,6 +27,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ClangdSettings">
+    <option name="clangTidyViaClangd" value="false" />
     <option name="formatViaClangd" value="false" />
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
@@ -64,9 +65,9 @@
     </key>
   </component>
   <component name="RunManager" selected="CMake Application.test_cl_signatures">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="scheme_A" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="scheme_A" CONFIG_NAME="Debug">
@@ -89,11 +90,6 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="CMake Application.scheme_A" />
       <item itemvalue="CMake Application.scheme_B" />
@@ -114,7 +110,9 @@
       <workItem from="1625760266806" duration="124000" />
       <workItem from="1625761188386" duration="62000" />
       <workItem from="1625814262176" duration="273000" />
-      <workItem from="1625833004945" duration="7013000" />
+      <workItem from="1625833004945" duration="7273000" />
+      <workItem from="1626070080909" duration="343000" />
+      <workItem from="1626255418804" duration="4522000" />
     </task>
     <servers />
   </component>
@@ -125,9 +123,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/test_cl_signatures.c</url>
-          <line>112</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/scheme_C/schemeC_signatures.c</url>
+          <line>189</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/scheme_C/schemeC_signatures.c</url>
+          <line>174</line>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

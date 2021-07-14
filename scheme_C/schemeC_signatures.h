@@ -46,6 +46,6 @@ void schemeC_generate_pk(schemeC_public_key *pk, schemeC_secret_key *sk);
 
 void schemeC_sign(schemeC_signature *sig, BIG_256_56 *message, schemeC_secret_key *sk, csprng *prng);
 
-int schemeC_verify(schemeC_signature *sig, BIG_256_56 message, BIG_256_56 randomness, schemeC_public_key *pk);
+int schemeC_verify(schemeC_signature *sig, BIG_256_56 *message, schemeC_public_key *pk);
 
 #endif //CL_SIGNATURES_SCHEMEC_SIGNATURES_H
