@@ -4,6 +4,7 @@
 
 #include <core.h>
 #include <bls_BN254.h>
+#include <string.h>
 
 #include "scheme_C/schemeC_signatures.h"
 #include "scheme_A/schemeA_signatures.h"
@@ -55,6 +56,7 @@ void test_scheme_B(csprng *prng) {
 
 void test_scheme_C(csprng *prng) {
     const uint32_t number_of_messages = 32;
+    int res = 1;
 
     BIG_256_56 message[number_of_messages];
     for(int i = 0; i < number_of_messages; i++) {
@@ -78,7 +80,14 @@ void test_scheme_C(csprng *prng) {
 
     schemeC_sign(&sig, message, &sk, prng);
 
-    if(schemeC_verify(&sig, message, &pk)) {
+    if(! schemeC_verify(&sig, message, &pk)) res = 0;
+
+
+    //Negative test change message to 0
+    memset(message, 0, number_of_messages * (sizeof(BIG_256_56)));
+    if(schemeC_verify(&sig, message, &pk)) res = 0;
+
+    if(res) {
         printf("Success\n");
     } else {
         printf("Failure\n");

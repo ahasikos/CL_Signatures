@@ -15,10 +15,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_B/schemeB_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_B/schemeB_signatures.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_cl_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_cl_signatures.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +108,7 @@
       <workItem from="1625814262176" duration="273000" />
       <workItem from="1625833004945" duration="7273000" />
       <workItem from="1626070080909" duration="343000" />
-      <workItem from="1626255418804" duration="4522000" />
+      <workItem from="1626255418804" duration="5046000" />
     </task>
     <servers />
   </component>
@@ -120,20 +116,6 @@
     <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/scheme_C/schemeC_signatures.c</url>
-          <line>189</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/scheme_C/schemeC_signatures.c</url>
-          <line>174</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="T" />
