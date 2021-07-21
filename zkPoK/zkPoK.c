@@ -110,6 +110,6 @@ int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c,
     ECP2_BN254_copy(&lhs, &M_times_c);
 
     if(ECP2_BN254_equals(&rhs, &lhs)) return 1;
-    
+
     return 0;
 }

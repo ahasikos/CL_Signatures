@@ -69,7 +69,7 @@ int main() {
     RAND_seed(&prng, sizeof(seed), seed);
     //---------------------------------------------------
 
-    printf("Testing Scheme A...");
+    printf("Testing zkPoK...");
     test_zkPoK(&prng);
 
     return 0;
