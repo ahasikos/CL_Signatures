@@ -4,7 +4,7 @@
 
 #include <pair_BN254.h>
 
-#include "zkPoK.h"
+#include "commitment_scheme.h"
 
 void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeC_public_key *public_key) {
     ECP2_BN254 g_times_m_zero;
@@ -14,16 +14,11 @@ void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeC_pu
 
     ECP2_BN254_copy(commitment, &g_times_m_zero);
 
-    //Iteration 1
     ECP2_BN254 Z_i_times_m_i, sum;
+    ECP2_BN254_inf(&sum);
 
-    ECP2_BN254_copy(&Z_i_times_m_i, &public_key->Z[0]);
-    PAIR_BN254_G2mul(&Z_i_times_m_i, message[1]);
-
-    ECP2_BN254_copy(&sum, &Z_i_times_m_i);
-
-    for(int i = 2; i < public_key->l; i++) {
-        ECP2_BN254_copy(&Z_i_times_m_i, &public_key->Z[i]);
+    for(int i = 1; i < public_key->l; i++) {
+        ECP2_BN254_copy(&Z_i_times_m_i, &public_key->Z[i - 1]);
         PAIR_BN254_G2mul(&Z_i_times_m_i, message[i]);
 
         ECP2_BN254_add(&sum, &Z_i_times_m_i);
@@ -46,16 +41,11 @@ void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeC_public_key *public_key, cspr
 
     ECP2_BN254_copy(T, &g_times_t_zero);
 
-    //Iteration 1
     ECP2_BN254 Z_i_times_t_i, sum;
+    ECP2_BN254_inf(&sum);
 
-    ECP2_BN254_copy(&Z_i_times_t_i, &public_key->Z[0]);
-    PAIR_BN254_G2mul(&Z_i_times_t_i, t[1]);
-
-    ECP2_BN254_copy(&sum, &Z_i_times_t_i);
-
-    for(int i = 2; i < public_key->l; i++) {
-        ECP2_BN254_copy(&Z_i_times_t_i, &public_key->Z[i]);
+    for(int i = 1; i < public_key->l; i++) {
+        ECP2_BN254_copy(&Z_i_times_t_i, &public_key->Z[i - 1]);
         PAIR_BN254_G2mul(&Z_i_times_t_i, t[i]);
 
         ECP2_BN254_add(&sum, &Z_i_times_t_i);
@@ -84,16 +74,11 @@ int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c,
 
     ECP2_BN254_copy(&rhs, &g_times_s_zero);
 
-    //Iteration 1
     ECP2_BN254 Z_i_times_s_i, sum;
+    ECP2_BN254_inf(&sum);
 
-    ECP2_BN254_copy(&Z_i_times_s_i, &public_key->Z[0]);
-    PAIR_BN254_G2mul(&Z_i_times_s_i, s[1]);
-
-    ECP2_BN254_copy(&sum, &Z_i_times_s_i);
-
-    for(int i = 2; i < public_key->l; i++) {
-        ECP2_BN254_copy(&Z_i_times_s_i, &public_key->Z[i]);
+    for(int i = 1; i < public_key->l; i++) {
+        ECP2_BN254_copy(&Z_i_times_s_i, &public_key->Z[i - 1]);
         PAIR_BN254_G2mul(&Z_i_times_s_i, s[i]);
 
         ECP2_BN254_add(&sum, &Z_i_times_s_i);

@@ -2,13 +2,13 @@
 // Created by Alexandros Hasikos on 21/07/2021.
 //
 
-#include <zkPoK/zkPoK.h>
+#include <signature_on_committed_value/commitment_scheme.h>
 #include <bls_BN254.h>
 
 
 void test_zkPoK(csprng *prng) {
     const uint32_t number_of_messages = 32;
-    int res = 1;
+    int res;
 
     BIG_256_56 message[number_of_messages], t[number_of_messages], s[number_of_messages], c;
 
@@ -69,7 +69,7 @@ int main() {
     RAND_seed(&prng, sizeof(seed), seed);
     //---------------------------------------------------
 
-    printf("Testing zkPoK...");
+    printf("Testing signature_on_committed_value...");
     test_zkPoK(&prng);
 
     return 0;

@@ -11,8 +11,8 @@
 #include <ecp2_BN254.h>
 
 typedef struct {
-    BIG_256_56 x_big;
-    BIG_256_56 y_big;
+    BIG_256_56 x;
+    BIG_256_56 y;
 } schemeA_secret_key;
 
 typedef struct {

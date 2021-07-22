@@ -1,29 +1,29 @@
 //
-// Created by Alexandros Hasikos on 09/07/2021.
+// Created by Alexandros Hasikos on 22/07/2021.
 //
 
-#include "schemeC_signatures.h"
+#include "schemeD_signatures.h"
 #include <utils/utils.h>
 #include <pair_BN254.h>
 #include <string.h>
 
-void schemeC_init_secret_key(schemeC_secret_key *sk, BIG_256_56 *buf, uint32_t number_of_messages) {
+void schemeD_init_secret_key(schemeD_secret_key *sk, BIG_256_56 *buf, uint32_t number_of_messages) {
     sk->l = number_of_messages;
     sk->z = buf;
 }
 
-void schemeC_init_public_key(schemeC_public_key *pk, ECP2_BN254 *buf, uint32_t number_of_messages) {
+void schemeD_init_public_key(schemeD_public_key *pk, ECP2_BN254 *buf, uint32_t number_of_messages) {
     pk->l = number_of_messages;
     pk->Z = buf;
 }
 
-void schemeC_init_signature(schemeC_signature *sig, ECP_BN254 *buf_A, ECP_BN254 *buf_B, uint32_t number_of_messages) {
+void schemeD_init_signature(schemeD_signature *sig, ECP_BN254 *buf_A, ECP_BN254 *buf_B, uint32_t number_of_messages) {
     sig->l = number_of_messages;
     sig->A = buf_A;
     sig->B = buf_B;
 }
 
-void schemeC_generate_sk(schemeC_secret_key *sk, csprng *prng) {
+void schemeD_generate_sk(schemeD_secret_key *sk, csprng *prng) {
     BIG_256_56_random(sk->x, prng);
     BIG_256_56_random(sk->y, prng);
 
@@ -32,7 +32,7 @@ void schemeC_generate_sk(schemeC_secret_key *sk, csprng *prng) {
     }
 }
 
-void schemeC_generate_pk(schemeC_public_key *pk, schemeC_secret_key *sk) {
+void schemeD_generate_pk(schemeD_public_key *pk, schemeD_secret_key *sk) {
     ECP2_BN254_generator(&pk->g_2);
 
     ECP2_BN254_copy(&pk->Y, &pk->g_2);
@@ -44,10 +44,13 @@ void schemeC_generate_pk(schemeC_public_key *pk, schemeC_secret_key *sk) {
     for(int i = 0; i < pk->l; i++) {
         ECP2_BN254_copy(&pk->Z[i], &pk->g_2);
         PAIR_BN254_G2mul(&pk->Z[i], sk->z[i]);
+
+        ECP2_BN254_copy(&pk->W[i], &pk->Y);
+        PAIR_BN254_G2mul(&pk->W[i], sk->z[i]);
     }
 }
 
-void schemeC_sign(schemeC_signature *sig, BIG_256_56 *message, schemeC_secret_key *sk, csprng *prng) {
+void schemeD_sign(schemeD_signature *sig, BIG_256_56 *message, schemeD_secret_key *sk, csprng *prng) {
     //Generate random element
     FP_BN254 rnd;
     FP_BN254_rand(&rnd, prng);
@@ -98,7 +101,7 @@ void schemeC_sign(schemeC_signature *sig, BIG_256_56 *message, schemeC_secret_ke
     ECP_BN254_add(&sig->c, &sum);
 }
 
-int schemeC_verify(schemeC_signature *sig, BIG_256_56 *message, schemeC_public_key *pk) {
+int schemeD_verify(schemeD_signature *sig, BIG_256_56 *message, schemeD_public_key *pk) {
     int res = 0, v1 = 0, v2 = 0;
 
     //Verification 1

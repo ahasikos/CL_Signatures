@@ -11,9 +11,9 @@
 #include <ecp_BN254.h>
 
 typedef struct {
-    BIG_256_56 x_big;
-    BIG_256_56 y_big;
-    BIG_256_56 *z_big;
+    BIG_256_56 x;
+    BIG_256_56 y;
+    BIG_256_56 *z;
     uint32_t l;
 } schemeC_secret_key;
 

@@ -3,9 +3,11 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="cl_signatures" targetName="test_cl_signatures" />
-      <config projectName="cl_signatures" targetName="zkPoK" />
       <config projectName="cl_signatures" targetName="scheme_C" />
       <config projectName="cl_signatures" targetName="test_zkPoK" />
+      <config projectName="cl_signatures" targetName="signature_on_committed_value" />
+      <config projectName="cl_signatures" targetName="scheme_D" />
+      <config projectName="cl_signatures" targetName="utils" />
       <config projectName="cl_signatures" targetName="scheme_A" />
       <config projectName="cl_signatures" targetName="scheme_B" />
     </generated>
@@ -17,11 +19,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/test_zkPoK.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zkPoK/zkPoK.c" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/zkPoK/zkPoK.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheme_D/schemeD_signatures.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scheme_D/schemeD_signatures.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/utils.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/utils.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_A/schemeA_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_A/schemeA_signatures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_A/schemeA_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_A/schemeA_signatures.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_B/schemeB_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_B/schemeB_signatures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_B/schemeB_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_B/schemeB_signatures.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_zkPoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_zkPoK.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zkPoK/zkPoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/zkPoK/zkPoK.h" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,14 +78,17 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/scheme_A" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.test_zkPoK">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+  <component name="RunManager" selected="CMake Application.test_cl_signatures">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="scheme_A" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="scheme_A" CONFIG_NAME="Debug">
@@ -87,6 +106,16 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="scheme_D" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="scheme_D" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="signature_on_committed_value" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="signature_on_committed_value" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="test_cl_signatures" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="test_cl_signatures" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cl_signatures" RUN_TARGET_NAME="test_cl_signatures">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -97,7 +126,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="zkPoK" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="zkPoK" CONFIG_NAME="Debug">
+    <configuration name="utils" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="utils" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -111,9 +140,11 @@
       <item itemvalue="CMake Application.scheme_A" />
       <item itemvalue="CMake Application.scheme_B" />
       <item itemvalue="CMake Application.scheme_C" />
+      <item itemvalue="CMake Application.scheme_D" />
+      <item itemvalue="CMake Application.signature_on_committed_value" />
       <item itemvalue="CMake Application.test_cl_signatures" />
       <item itemvalue="CMake Application.test_zkPoK" />
-      <item itemvalue="CMake Application.zkPoK" />
+      <item itemvalue="CMake Application.utils" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -133,7 +164,8 @@
       <workItem from="1626070080909" duration="343000" />
       <workItem from="1626255418804" duration="5307000" />
       <workItem from="1626779721232" duration="299000" />
-      <workItem from="1626863476624" duration="5133000" />
+      <workItem from="1626863476624" duration="5710000" />
+      <workItem from="1626938605035" duration="14524000" />
     </task>
     <servers />
   </component>
@@ -141,6 +173,15 @@
     <option name="version" value="3" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/scheme_A/schemeA_signatures.c</url>
+          <line>65</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="T" />

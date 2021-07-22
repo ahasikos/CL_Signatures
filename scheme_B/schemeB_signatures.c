@@ -3,12 +3,13 @@
 //
 
 #include "schemeB_signatures.h"
+#include <utils/utils.h>
 #include <pair_BN254.h>
 
 void schemeB_generate_sk(schemeB_secret_key *sk, csprng *prng) {
-    BIG_256_56_random(sk->x_big, prng);
-    BIG_256_56_random(sk->y_big, prng);
-    BIG_256_56_random(sk->z_big, prng);
+    BIG_256_56_random(sk->x, prng);
+    BIG_256_56_random(sk->y, prng);
+    BIG_256_56_random(sk->z, prng);
 }
 
 void schemeB_generate_pk(schemeB_public_key *pk, schemeB_secret_key *sk) {
@@ -18,9 +19,9 @@ void schemeB_generate_pk(schemeB_public_key *pk, schemeB_secret_key *sk) {
     ECP2_BN254_copy(&pk->X, &pk->g_2);
     ECP2_BN254_copy(&pk->Z, &pk->g_2);
 
-    PAIR_BN254_G2mul(&pk->X, sk->x_big);
-    PAIR_BN254_G2mul(&pk->Y, sk->y_big);
-    PAIR_BN254_G2mul(&pk->Z, sk->z_big);
+    PAIR_BN254_G2mul(&pk->X, sk->x);
+    PAIR_BN254_G2mul(&pk->Y, sk->y);
+    PAIR_BN254_G2mul(&pk->Z, sk->z);
 }
 
 void schemeB_sign(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_secret_key *sk, csprng *prng) {
@@ -33,32 +34,30 @@ void schemeB_sign(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomn
 
     //Compute A -> a^z
     ECP_BN254_copy(&sig->A, &sig->a);
-    PAIR_BN254_G1mul(&sig->A, sk->z_big);
+    PAIR_BN254_G1mul(&sig->A, sk->z);
 
     // Compute b -> a^y
     ECP_BN254_copy(&sig->b, &sig->a);
-    PAIR_BN254_G1mul(&sig->b, sk->y_big);
+    PAIR_BN254_G1mul(&sig->b, sk->y);
 
     //Compute B -> A^y
     ECP_BN254_copy(&sig->B, &sig->A);
-    PAIR_BN254_G1mul(&sig->B, sk->y_big);
+    PAIR_BN254_G1mul(&sig->B, sk->y);
 
     //Compute c-> a^(x + mxy) * A^(xyr)
-    BIG_256_56 m_times_x, mx_times_y, x_plus_mxy, x_times_y, xy_times_r;
+    BIG_256_56 x_plus_xym, xym, xyr;
     ECP_BN254 a_times_x_plus_xym, A_times_xyr;
 
-    BIG_256_56_modmul(m_times_x, message, sk->x_big, (int64_t *)CURVE_Order_BN254);
-    BIG_256_56_modmul(mx_times_y, m_times_x, sk->y_big, (int64_t *)CURVE_Order_BN254);
-    BIG_256_56_modadd(x_plus_mxy, mx_times_y, sk->x_big, (int64_t *)CURVE_Order_BN254);
+    BIG_256_56_mul_xyz(&xym, sk->x, sk->y, message);
+    BIG_256_56_modadd(x_plus_xym, xym, sk->x, (int64_t *)CURVE_Order_BN254);
 
     ECP_BN254_copy(&a_times_x_plus_xym, &sig->a);
-    PAIR_BN254_G1mul(&a_times_x_plus_xym, x_plus_mxy);
+    PAIR_BN254_G1mul(&a_times_x_plus_xym, x_plus_xym);
 
-    BIG_256_56_modmul(x_times_y, sk->x_big, sk->y_big, (int64_t *)CURVE_Order_BN254);
-    BIG_256_56_modmul(xy_times_r, x_times_y, randomness, (int64_t *)CURVE_Order_BN254);
+    BIG_256_56_mul_xyz(&xyr, sk->x, sk->y, randomness);
 
     ECP_BN254_copy(&A_times_xyr, &sig->A);
-    PAIR_BN254_G1mul(&A_times_xyr, xy_times_r);
+    PAIR_BN254_G1mul(&A_times_xyr, xyr);
 
     // Multiply the two
     ECP_BN254_copy(&sig->c, &a_times_x_plus_xym);
@@ -66,58 +65,34 @@ void schemeB_sign(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomn
 }
 
 int schemeB_verify(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_public_key *pk) {
+    int res = 0;
     //Verification 1
-    FP12_BN254 p1, p2;
 
-    PAIR_BN254_ate(&p1, &pk->Z, &sig->a);
-    PAIR_BN254_fexp(&p1);
-
-    PAIR_BN254_ate(&p2, &pk->g_2, &sig->A);
-    PAIR_BN254_fexp(&p2);
+    res += pairing_and_equality_check(&pk->Z, &sig->a, &pk->g_2, &sig->A);
 
     //Verification 2
-    FP12_BN254 p3, p4, p5, p6;
-
-    PAIR_BN254_ate(&p3, &pk->Y, &sig->a);
-    PAIR_BN254_fexp(&p3);
-
-    PAIR_BN254_ate(&p4, &pk->g_2, &sig->b);
-    PAIR_BN254_fexp(&p4);
-
-    PAIR_BN254_ate(&p5, &pk->Y, &sig->A);
-    PAIR_BN254_fexp(&p5);
-
-    PAIR_BN254_ate(&p6, &pk->g_2, &sig->B);
-    PAIR_BN254_fexp(&p6);
+    res += pairing_and_equality_check(&pk->Y, &sig->a, &pk->g_2, &sig->b);
 
     //Verification 3
-    FP12_BN254 p7, p8, p9;
+    res += pairing_and_equality_check(&pk->Y, &sig->A, &pk->g_2, &sig->B);
 
-    PAIR_BN254_ate(&p7, &pk->X, &sig->a);
-    PAIR_BN254_fexp(&p7);
+    //Verification 4
+    FP12_BN254 rhs, lhs;
+    ECP_BN254 b_times_m, B_times_r;
 
-    PAIR_BN254_G1mul(&sig->b, message);
-    PAIR_BN254_ate(&p8, &pk->X, &sig->b);
-    PAIR_BN254_fexp(&p8);
+    ECP_BN254_copy(&b_times_m, &sig->b);
+    PAIR_BN254_G1mul(&b_times_m, message);
 
-    PAIR_BN254_G1mul(&sig->B, randomness);
-    PAIR_BN254_ate(&p9, &pk->X, &sig->B);
-    PAIR_BN254_fexp(&p9);
+    ECP_BN254_copy(&B_times_r, &sig->B);
+    PAIR_BN254_G1mul(&B_times_r, randomness);
 
-    FP12_BN254 lhs;
-    FP12_BN254_copy(&lhs, &p7);
-    FP12_BN254_mul(&lhs, &p8);
-    FP12_BN254_mul(&lhs, &p9);
+    three_element_pairing_and_multiplication(&lhs, &pk->X, &sig->a, &pk->X, &b_times_m, &pk->X, &B_times_r);
 
-    FP12_BN254 rhs;
     PAIR_BN254_ate(&rhs, &pk->g_2, &sig->c);
     PAIR_BN254_fexp(&rhs);
+    res += FP12_BN254_equals(&lhs, &rhs);
 
-    if( (FP12_BN254_equals(&p1, &p2) == 1) &&
-        (FP12_BN254_equals(&p3, &p4)) &&
-        (FP12_BN254_equals(&p5, &p6)) &&
-        (FP12_BN254_equals(&lhs, &rhs)) == 1 ){
-        return 1;
-    }
+    if( res == 4 ) return 1;
+
     return 0;
 }
