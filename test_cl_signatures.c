@@ -6,6 +6,7 @@
 #include <bls_BN254.h>
 #include <string.h>
 
+#include "scheme_D/schemeD_signatures.h"
 #include "scheme_C/schemeC_signatures.h"
 #include "scheme_A/schemeA_signatures.h"
 #include "scheme_B/schemeB_signatures.h"
@@ -97,6 +98,52 @@ void test_scheme_C(csprng *prng) {
     free(Z_ECP_buf);
 }
 
+void test_scheme_D(csprng *prng) {
+    const uint32_t number_of_messages = 32;
+    int res = 1;
+
+    BIG_256_56 message[number_of_messages];
+    for(int i = 0; i < number_of_messages; i++) {
+        BIG_256_56_random(message[i], prng);
+    }
+
+    schemeD_secret_key sk;
+    BIG_256_56 *z_big_buf = malloc(sizeof(BIG_256_56) * number_of_messages);
+    schemeD_init_secret_key(&sk, z_big_buf, number_of_messages);
+    schemeD_generate_sk(&sk, prng);
+
+    schemeD_public_key pk;
+    ECP2_BN254 *Z_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
+    ECP2_BN254 *W_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
+    schemeD_init_public_key(&pk, Z_ECP_buf, W_ECP_buf, number_of_messages);
+    schemeD_generate_pk(&pk, &sk);
+
+    schemeD_signature sig;
+    ECP_BN254 *A_ECP_buf = malloc(sizeof(ECP_BN254) * number_of_messages);
+    ECP_BN254 *B_ECP_buf = malloc(sizeof(ECP_BN254) * number_of_messages);
+    schemeD_init_signature(&sig, A_ECP_buf, B_ECP_buf, number_of_messages);
+
+    schemeD_sign(&sig, message, &sk, prng);
+
+    if(! schemeD_verify(&sig, message, &pk)) res = 0;
+
+
+    //Negative test change message to 0
+    memset(message, 0, number_of_messages * (sizeof(BIG_256_56)));
+    if(schemeD_verify(&sig, message, &pk)) res = 0;
+
+    if(res) {
+        printf("Success\n");
+    } else {
+        printf("Failure\n");
+    }
+
+    free(z_big_buf);
+    free(Z_ECP_buf);
+    free(A_ECP_buf);
+    free(B_ECP_buf);
+}
+
 int main() {
 
     //---------------------------------------------------
@@ -126,6 +173,9 @@ int main() {
 
     printf("Testing Scheme C...");
     test_scheme_C(&prng);
+
+    printf("Testing Scheme D...");
+    test_scheme_D(&prng);
 
 
     return 0;

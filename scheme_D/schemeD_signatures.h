@@ -23,6 +23,7 @@ typedef struct {
     ECP2_BN254 *Z;
     ECP2_BN254 *W;
     uint32_t l;
+    ECP_BN254 g;
     ECP2_BN254 g_2;
 } schemeD_public_key;
 
@@ -33,12 +34,11 @@ typedef struct {
     ECP_BN254 *B;
     ECP_BN254 c;
     uint32_t l;
-    BIG_256_56 r;
 }schemeD_signature;
 
 void schemeD_init_secret_key(schemeD_secret_key *sk, BIG_256_56 *buf, uint32_t number_of_messages);
 
-void schemeD_init_public_key(schemeD_public_key *pk, ECP2_BN254 *buf, uint32_t number_of_messages);
+void schemeD_init_public_key(schemeD_public_key *pk, ECP2_BN254 *Z_buf, ECP2_BN254 *W_buf, uint32_t number_of_messages);
 
 void schemeD_init_signature(schemeD_signature *sig, ECP_BN254 *buf_A, ECP_BN254 *buf_B, uint32_t number_of_messages);
 

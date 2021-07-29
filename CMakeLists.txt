@@ -17,7 +17,10 @@ add_library(signature_on_committed_value
 add_library(utils utils/utils.c)
 
 add_executable(test_cl_signatures test_cl_signatures.c)
-target_link_libraries(test_cl_signatures utils scheme_A scheme_B scheme_C ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
+target_link_libraries(test_cl_signatures utils scheme_A scheme_B scheme_C scheme_D ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
 
 add_executable(test_zkPoK test_zkPoK.c)
-target_link_libraries(test_zkPoK signature_on_committed_value scheme_C utils ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
+target_link_libraries(test_zkPoK signature_on_committed_value scheme_C scheme_D utils ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
+
+add_executable(test_anonymous_credentials test_anonymous_credentials.c)
+target_link_libraries(test_anonymous_credentials utils scheme_D signature_on_committed_value ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)

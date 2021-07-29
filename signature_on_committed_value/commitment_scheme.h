@@ -9,14 +9,14 @@
 #include <ecp2_BN254.h>
 #include <core.h>
 
-#include <scheme_C/schemeC_signatures.h>
+#include <scheme_D/schemeD_signatures.h>
 
-void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeC_public_key *public_key);
+void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeD_public_key *public_key);
 
-void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeC_public_key *public_key, csprng *prng);
+void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeD_public_key *public_key, csprng *prng);
 
-void prover_2(BIG_256_56 *s, BIG_256_56 c, BIG_256_56 *t, BIG_256_56 *message, schemeC_public_key *public_key);
+void prover_2(BIG_256_56 *s, BIG_256_56 c, BIG_256_56 *t, BIG_256_56 *message, uint32_t mlen);
 
-int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c, schemeC_public_key *public_key);
+int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c, schemeD_public_key *public_key);
 
 #endif //CL_SIGNATURES_COMMITMENT_SCHEME_H

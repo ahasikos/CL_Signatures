@@ -12,9 +12,11 @@ void schemeD_init_secret_key(schemeD_secret_key *sk, BIG_256_56 *buf, uint32_t n
     sk->z = buf;
 }
 
-void schemeD_init_public_key(schemeD_public_key *pk, ECP2_BN254 *buf, uint32_t number_of_messages) {
+void
+schemeD_init_public_key(schemeD_public_key *pk, ECP2_BN254 *Z_buf, ECP2_BN254 *W_buf, uint32_t number_of_messages) {
     pk->l = number_of_messages;
-    pk->Z = buf;
+    pk->Z = Z_buf;
+    pk->W = W_buf;
 }
 
 void schemeD_init_signature(schemeD_signature *sig, ECP_BN254 *buf_A, ECP_BN254 *buf_B, uint32_t number_of_messages) {
@@ -34,6 +36,7 @@ void schemeD_generate_sk(schemeD_secret_key *sk, csprng *prng) {
 
 void schemeD_generate_pk(schemeD_public_key *pk, schemeD_secret_key *sk) {
     ECP2_BN254_generator(&pk->g_2);
+    ECP_BN254_generator(&pk->g);
 
     ECP2_BN254_copy(&pk->Y, &pk->g_2);
     ECP2_BN254_copy(&pk->X, &pk->g_2);
@@ -72,7 +75,7 @@ void schemeD_sign(schemeD_signature *sig, BIG_256_56 *message, schemeD_secret_ke
     PAIR_BN254_G1mul(&sig->b, sk->y);
 
     //Compute c-> a^(x + mxy) * A^(xyr)
-    BIG_256_56 x_plus_xym, x_times_y, xym, xyr;
+    BIG_256_56 x_plus_xym, x_times_y, xym;
     ECP_BN254 a_times_x_plus_xym;
 
     BIG_256_56_mul_xyz(&xym, sk->x, sk->y, message[0]);

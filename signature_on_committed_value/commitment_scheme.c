@@ -3,10 +3,11 @@
 //
 
 #include <pair_BN254.h>
+#include <scheme_D/schemeD_signatures.h>
 
 #include "commitment_scheme.h"
 
-void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeC_public_key *public_key) {
+void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeD_public_key *public_key) {
     ECP2_BN254 g_times_m_zero;
 
     ECP2_BN254_copy(&g_times_m_zero, &public_key->g_2);
@@ -27,7 +28,7 @@ void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeC_pu
     ECP2_BN254_add(commitment, &sum);
 }
 
-void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeC_public_key *public_key, csprng *prng) {
+void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeD_public_key *public_key, csprng *prng) {
 
     //Generate t
     for(int i = 0; i < public_key->l; i++) {
@@ -54,10 +55,10 @@ void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeC_public_key *public_key, cspr
     ECP2_BN254_add(T, &sum);
 }
 
-void prover_2(BIG_256_56 *s, BIG_256_56 c, BIG_256_56 *t, BIG_256_56 *message, schemeC_public_key *public_key) {
+void prover_2(BIG_256_56 *s, BIG_256_56 c, BIG_256_56 *t, BIG_256_56 *message, uint32_t mlen) {
     BIG_256_56 m_i_times_c, m_i_times_c_plus_t_i;
 
-    for(int i = 0; i < public_key->l; i++) {
+    for(int i = 0; i < mlen; i++) {
         BIG_256_56_modmul(m_i_times_c, message[i], c, (int64_t *)CURVE_Order_BN254);
         BIG_256_56_modadd(m_i_times_c_plus_t_i, m_i_times_c, t[i], (int64_t *)CURVE_Order_BN254);
 
@@ -65,7 +66,7 @@ void prover_2(BIG_256_56 *s, BIG_256_56 c, BIG_256_56 *t, BIG_256_56 *message, s
     }
 }
 
-int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c, schemeC_public_key *public_key) {
+int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c, schemeD_public_key *public_key) {
 
     ECP2_BN254 rhs, g_times_s_zero;
 

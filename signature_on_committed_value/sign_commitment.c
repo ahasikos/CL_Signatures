@@ -5,8 +5,9 @@
 #include "sign_commitment.h"
 
 #include <pair_BN254.h>
+#include <params.h>
 
-void sign_commitment(schemeC_signature *sig, ECP2_BN254 *commitment, schemeC_secret_key *sk, csprng *prng) {
+void sign_commitment(schemeD_signature *sig, ECP2_BN254 *commitment, schemeD_secret_key *sk, csprng *prng) {
     BIG_256_56 alpha;
     BIG_256_56_random(alpha, prng);
 
@@ -23,4 +24,24 @@ void sign_commitment(schemeC_signature *sig, ECP2_BN254 *commitment, schemeC_sec
 
     ECP_BN254_copy(&sig->b, &sig->a);
     PAIR_BN254_G1mul(&sig->b, sk->y);
+
+    ECP_BN254 a_times_x;
+
+    ECP_BN254_copy(&a_times_x, &sig->a);
+    PAIR_BN254_G1mul(&a_times_x, sk->x);
+
+    BIG_256_56 alpha_xy;
+    BIG_256_56_one(alpha_xy);
+
+    BIG_256_56_modmul(alpha_xy, alpha, sk->x, MODULUS);
+    BIG_256_56_modmul(alpha_xy, alpha_xy, sk->y, MODULUS);
+
+    ECP2_BN254 M_times_alpha_xy;
+
+    ECP2_BN254_copy(&M_times_alpha_xy, commitment);
+    ECP2_BN254_mul(&M_times_alpha_xy, alpha_xy);
+
+
+
+
 }
