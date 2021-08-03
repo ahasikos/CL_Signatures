@@ -20,19 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/params.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_anonymous_credentials.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_D/schemeD_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_D/schemeD_signatures.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_D/schemeD_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/scheme_D/schemeD_signatures.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.c" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.h" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.c" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.h" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_cl_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_cl_signatures.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_zkPoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_zkPoK.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,12 +75,7 @@
       <recent name="$PROJECT_DIR$/scheme_A" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.test_cl_signatures">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="CMake Application.test_zkPoK">
     <configuration name="scheme_A" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="scheme_A" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -168,7 +157,9 @@
       <workItem from="1626779721232" duration="299000" />
       <workItem from="1626863476624" duration="5710000" />
       <workItem from="1626938605035" duration="15469000" />
-      <workItem from="1627464953092" duration="14272000" />
+      <workItem from="1627464953092" duration="17602000" />
+      <workItem from="1627635251269" duration="2881000" />
+      <workItem from="1627994418857" duration="11752000" />
     </task>
     <servers />
   </component>
@@ -179,35 +170,26 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/test_zkPoK.c</url>
-          <line>36</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/test_zkPoK.c</url>
-          <line>93</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/test_zkPoK.c</url>
-          <line>58</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/test_zkPoK.c</url>
-          <line>76</line>
-          <option name="timeStamp" value="6" />
+          <url>file://$PROJECT_DIR$/scheme_D/schemeD_signatures.c</url>
+          <line>107</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/test_cl_signatures.c</url>
-          <line>101</line>
-          <option name="timeStamp" value="7" />
+          <line>127</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/scheme_D/schemeD_signatures.c</url>
+          <line>117</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="CMakeRunConfiguration">
         <watch expression="T" />
+        <watch expression="rhs.x.a" />
       </configuration>
     </watches-manager>
   </component>

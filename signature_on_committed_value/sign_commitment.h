@@ -7,6 +7,6 @@
 
 #include <scheme_D/schemeD_signatures.h>
 
-void sign_commitment(schemeD_signature *sig, ECP2_BN254 *commitment, schemeD_secret_key *sk, csprng *prng);
+void sign_commitment(schemeD_signature *sig, octet *commitment, schemeD_secret_key *sk, csprng *prng);
 
 #endif //CL_SIGNATURES_SIGN_COMMITMENT_H

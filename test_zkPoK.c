@@ -7,6 +7,8 @@
 #include <scheme_D/schemeD_signatures.h>
 #include <scheme_C/schemeC_signatures.h>
 #include <signature_on_committed_value/sign_commitment.h>
+#include <ecdh_BN254.h>
+#include <signature_on_committed_value/signature_PoK.h>
 
 
 //void test_zkPoK_1(csprng *prng) {
@@ -40,7 +42,7 @@
 //
 //    prover_2(s, c, t, message, &pk);
 //
-//    res = verifier(&T, &commitment, s, c, &pk);
+//    res = PoK_verifier(&T, &commitment, s, c, &pk);
 //
 //    if(res) {
 //        printf("Success\n");
@@ -56,9 +58,9 @@ void test_zkPoK_2(csprng *prng) {
     const uint32_t number_of_messages = 32;
     int res = 0;
 
-    BIG_256_56 message[number_of_messages], t[number_of_messages], s[number_of_messages], c;
+    BIG_256_56 message[number_of_messages], t[number_of_messages], s[number_of_messages], challenge_1;
 
-    BIG_256_56_random(c, prng);
+    BIG_256_56_random(challenge_1, prng);
 
     for(int i = 0; i < number_of_messages; i++) {
         BIG_256_56_random(message[i], prng);
@@ -66,64 +68,85 @@ void test_zkPoK_2(csprng *prng) {
 
     //User key pair
     schemeD_secret_key user_sk;
-    BIG_256_56 *user_z_big_buf = malloc(sizeof(BIG_256_56) * number_of_messages);
+    BIG_256_56 user_z_big_buf[number_of_messages];
     schemeD_init_secret_key(&user_sk, user_z_big_buf, number_of_messages);
     schemeD_generate_sk(&user_sk, prng);
 
     schemeD_public_key user_pk;
-    ECP2_BN254 *user_Z_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
-    ECP2_BN254 *user_W_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
+    ECP2_BN254 user_Z_ECP_buf[number_of_messages];
+    ECP2_BN254 user_W_ECP_buf[number_of_messages];
     schemeD_init_public_key(&user_pk, user_Z_ECP_buf, user_W_ECP_buf, number_of_messages);
     schemeD_generate_pk(&user_pk, &user_sk);
 
     //Signer key pair
     schemeD_secret_key signer_sk;
-    BIG_256_56 *signer_z_big_buf = malloc(sizeof(BIG_256_56) * number_of_messages);
+    BIG_256_56 signer_z_big_buf[number_of_messages];
     schemeD_init_secret_key(&signer_sk, signer_z_big_buf, number_of_messages);
     schemeD_generate_sk(&signer_sk, prng);
 
     schemeD_public_key signer_pk;
-    ECP2_BN254 *signer_Z_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
-    ECP2_BN254 *signer_W_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
+    ECP2_BN254 signer_Z_ECP_buf[number_of_messages];
+    ECP2_BN254 signer_W_ECP_buf[number_of_messages];
     schemeD_init_public_key(&signer_pk, signer_Z_ECP_buf, signer_W_ECP_buf, number_of_messages);
     schemeD_generate_pk(&signer_pk, &signer_sk);
 
 
     //Obtain signature on commited value
 
-    ECP2_BN254 commitment, T;
+    ECP2_BN254 T;
 
-    generate_commitment(&commitment, message, &user_pk);
+    char commitment_1_buf[EFS_BN254 * 5];
+    octet commitment_1 = {0, sizeof(commitment_1_buf), commitment_1_buf};
+
+    generate_commitment(&commitment_1, message, &user_pk);
 
     //Prover -> Compute T
     prover_1(&T, t, &user_pk, prng);
 
-    //Verifier -> Send challenge c to prover
-    prover_2(s, c, t, message, number_of_messages);
+    //Verifier -> Send challenge_2 challenge_1 to prover
+    prover_2(s, challenge_1, t, message, number_of_messages);
 
-    //Prover -> Send s to verifier
-    verifier(&T, &commitment, s, c, &user_pk) ? res++ : (res = 0);
+    //Prover -> Send s to PoK_verifier
+    verifier(&T, &commitment_1, s, challenge_1, &user_pk) ? res++ : (res = 0);
 
     //Get signature on commited value given the PoK of message succeeded
 
     schemeD_signature sig;
-    ECP_BN254 *A_ECP_buf = malloc(sizeof(ECP_BN254) * number_of_messages);
-    ECP_BN254 *B_ECP_buf = malloc(sizeof(ECP_BN254) * number_of_messages);
+    ECP_BN254 A_ECP_buf[number_of_messages];
+    ECP_BN254 B_ECP_buf[number_of_messages];
     schemeD_init_signature(&sig, A_ECP_buf, B_ECP_buf, number_of_messages);
 
-    sign_commitment(&sig, NULL, &signer_sk, prng);
+    sign_commitment(&sig, &commitment_1, &signer_sk, prng);
+
+    schemeD_signature blind_sig;
+    ECP_BN254 blind_sig_A_ECP_buf[number_of_messages];
+    ECP_BN254 blind_sig_B_ECP_buf[number_of_messages];
+    schemeD_init_signature(&blind_sig, blind_sig_A_ECP_buf, blind_sig_B_ECP_buf, number_of_messages);
 
 
+    PoK_proof proof;
+    BIG_256_56_random(proof.r, prng);
 
+    PoK_compute_blind_signature(&blind_sig, &sig, &proof, prng);
 
-    free(signer_z_big_buf);
-    free(signer_Z_ECP_buf);
-    free(signer_W_ECP_buf);
-    free(user_z_big_buf);
-    free(user_Z_ECP_buf);
-    free(user_W_ECP_buf);
-    free(A_ECP_buf);
-    free(B_ECP_buf);
+    FP12_BN254 commitment_2;
+
+    PoK_generate_commitment(&commitment_2, &proof, message, &user_pk, &blind_sig);
+
+    FP12_BN254 T_2;
+    BIG_256_56 t1;
+    BIG_256_56 t2[number_of_messages];
+
+    PoK_prover_1(&T_2, t1, t2, &user_pk, &blind_sig, prng);
+
+    BIG_256_56 s1, challenge_2;
+    BIG_256_56 s2[number_of_messages];
+
+    BIG_256_56_random(challenge_2, prng);
+
+    PoK_prover_2(s1, s2, challenge_2, t1, t2, message, &proof, &blind_sig);
+
+    PoK_verifier(s1, s2, challenge_2, &T_2, &commitment_2, &user_pk, &blind_sig) ? res++ : (res = 0);
 
     res ? (printf("Success\n")) : (printf("Failure\n"));
 }
