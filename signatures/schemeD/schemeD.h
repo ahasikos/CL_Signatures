@@ -15,7 +15,7 @@ typedef struct {
     BIG_256_56 y;
     BIG_256_56 *z;
     uint32_t l;
-} schemeD_secret_key;
+} schemeD_sk;
 
 typedef struct {
     ECP2_BN254 X;
@@ -25,7 +25,7 @@ typedef struct {
     uint32_t l;
     ECP_BN254 g;
     ECP2_BN254 g_2;
-} schemeD_public_key;
+} schemeD_pk;
 
 typedef struct {
     ECP_BN254 a;
@@ -34,20 +34,26 @@ typedef struct {
     ECP_BN254 *B;
     ECP_BN254 c;
     uint32_t l;
-}schemeD_signature;
+}schemeD_sig;
 
-void schemeD_init_secret_key(schemeD_secret_key *sk, BIG_256_56 *buf, uint32_t number_of_messages);
+void schemeD_init_keypair(schemeD_sk* sk, schemeD_pk *pk, uint32_t number_of_messages);
 
-void schemeD_init_public_key(schemeD_public_key *pk, ECP2_BN254 *Z_buf, ECP2_BN254 *W_buf, uint32_t number_of_messages);
+void schemeD_destroy_keypair(schemeD_sk* sk, schemeD_pk *pk);
 
-void schemeD_init_signature(schemeD_signature *sig, ECP_BN254 *buf_A, ECP_BN254 *buf_B, uint32_t number_of_messages);
+void schemeD_init_secret_key(schemeD_sk *sk, BIG_256_56 *buf, uint32_t number_of_messages);
 
-void schemeD_generate_sk(schemeD_secret_key *sk, csprng *prng);
+void schemeD_init_public_key(schemeD_pk *pk, ECP2_BN254 *Z_buf, ECP2_BN254 *W_buf, uint32_t number_of_messages);
 
-void schemeD_generate_pk(schemeD_public_key *pk, schemeD_secret_key *sk);
+void schemeD_init_signature(schemeD_sig *sig, uint32_t number_of_messages);
 
-void schemeD_sign(schemeD_signature *sig, BIG_256_56 *message, schemeD_secret_key *sk, csprng *prng);
+void schemeD_destroy_signature(schemeD_sig *sig);
 
-int schemeD_verify(schemeD_signature *sig, BIG_256_56 *message, schemeD_public_key *pk);
+void schemeD_generate_sk(schemeD_sk *sk, csprng *prng);
+
+void schemeD_generate_pk(schemeD_pk *pk, schemeD_sk *sk);
+
+void schemeD_sign(schemeD_sig *sig, BIG_256_56 *message, schemeD_sk *sk, csprng *prng);
+
+int schemeD_verify(schemeD_sig *sig, BIG_256_56 *message, schemeD_pk *pk);
 
 #endif //CL_SIGNATURES_SCHEMED_H

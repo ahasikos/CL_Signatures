@@ -5,9 +5,9 @@
 #include <commitment_schemes/PoK_message/PoK_message.h>
 #include <bls_BN254.h>
 #include <signatures/schemeD/schemeD.h>
-#include <signature_on_committed_value/sign_commitment.h>
+#include <sign_commitment/sign_commitment.h>
 #include <ecdh_BN254.h>
-#include <signature_on_committed_value/signature_PoK.h>
+#include <commitment_schemes/PoK_signature/PoK_signature.h>
 #include <utils/utils.h>
 
 
@@ -23,12 +23,12 @@
 //        BIG_256_56_random(message[i], prng);
 //    }
 //
-//    schemeC_secret_key sk;
+//    schemeC_sk sk;
 //    BIG_256_56 *z_big_buf = malloc(sizeof(BIG_256_56) * number_of_messages);
 //    schemeC_init_secret_key(&sk, z_big_buf, number_of_messages);
 //    schemeC_generate_sk(&sk, prng);
 //
-//    schemeC_public_key pk;
+//    schemeC_pk pk;
 //    ECP2_BN254 *Z_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
 //    schemeC_init_public_key(&pk, Z_ECP_buf, number_of_messages);
 //    schemeC_generate_pk(&pk, &sk);
@@ -67,24 +67,24 @@ void test_zkPoK_2(csprng *prng) {
     }
 
     //User key pair
-    schemeD_secret_key user_sk;
+    schemeD_sk user_sk;
     BIG_256_56 user_z_big_buf[number_of_messages];
     schemeD_init_secret_key(&user_sk, user_z_big_buf, number_of_messages);
     schemeD_generate_sk(&user_sk, prng);
 
-    schemeD_public_key user_pk;
+    schemeD_pk user_pk;
     ECP2_BN254 user_Z_ECP_buf[number_of_messages];
     ECP2_BN254 user_W_ECP_buf[number_of_messages];
     schemeD_init_public_key(&user_pk, user_Z_ECP_buf, user_W_ECP_buf, number_of_messages);
     schemeD_generate_pk(&user_pk, &user_sk);
 
     //Signer key pair
-    schemeD_secret_key signer_sk;
+    schemeD_sk signer_sk;
     BIG_256_56 signer_z_big_buf[number_of_messages];
     schemeD_init_secret_key(&signer_sk, signer_z_big_buf, number_of_messages);
     schemeD_generate_sk(&signer_sk, prng);
 
-    schemeD_public_key signer_pk;
+    schemeD_pk signer_pk;
     ECP2_BN254 signer_Z_ECP_buf[number_of_messages];
     ECP2_BN254 signer_W_ECP_buf[number_of_messages];
     schemeD_init_public_key(&signer_pk, signer_Z_ECP_buf, signer_W_ECP_buf, number_of_messages);
@@ -110,7 +110,7 @@ void test_zkPoK_2(csprng *prng) {
 
     //Get signature on commited value given the PoK of message succeeded
 
-    schemeD_signature sig;
+    schemeD_sig sig;
     ECP_BN254 A_ECP_buf[number_of_messages];
     ECP_BN254 B_ECP_buf[number_of_messages];
     schemeD_init_signature(&sig, A_ECP_buf, B_ECP_buf, number_of_messages);
@@ -128,7 +128,7 @@ void test_zkPoK_2(csprng *prng) {
 
     sign_commitment(&sig, &converted_commitment, &signer_sk, prng);
 
-    schemeD_signature blind_sig;
+    schemeD_sig blind_sig;
     ECP_BN254 blind_sig_A_ECP_buf[number_of_messages];
     ECP_BN254 blind_sig_B_ECP_buf[number_of_messages];
     schemeD_init_signature(&blind_sig, blind_sig_A_ECP_buf, blind_sig_B_ECP_buf, number_of_messages);
@@ -181,7 +181,7 @@ int main() {
     RAND_seed(&prng, sizeof(seed), seed);
     //---------------------------------------------------
 
-//    printf("Testing signature_on_committed_value...");
+//    printf("Testing sign_commitment...");
 //    test_zkPoK_1(&prng);
 
     printf("Testing signature_on_committed_value_2...");

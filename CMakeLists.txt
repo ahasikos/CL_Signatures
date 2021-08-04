@@ -12,17 +12,27 @@ add_subdirectory(signatures/schemeC)
 add_subdirectory(signatures/schemeD)
 
 add_subdirectory(commitment_schemes/PoK_message)
+add_subdirectory(commitment_schemes/PoK_signature)
 
-add_library(signature_on_committed_value
-        signature_on_committed_value/sign_commitment.c
-        signature_on_committed_value/signature_PoK.c)
-add_library(utils utils/utils.c)
+add_subdirectory(sign_commitment)
+
+add_subdirectory(utils)
+
 
 add_executable(test_cl_signatures test_cl_signatures.c)
-target_link_libraries(test_cl_signatures utils schemeA schemeB schemeC schemeD ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
+target_link_libraries(test_cl_signatures
+        utils
+        schemeA
+        schemeB
+        schemeC
+        schemeD
+        ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
 
 add_executable(test_zkPoK test_zkPoK.c)
-target_link_libraries(test_zkPoK PoK_message signature_on_committed_value schemeC schemeD utils ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
-
-add_executable(test_anonymous_credentials test_anonymous_credentials.c)
-target_link_libraries(test_anonymous_credentials utils schemeD signature_on_committed_value ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
+target_link_libraries(test_zkPoK
+        PoK_message
+        PoK_signature
+        sign_commitment
+        schemeD
+        utils
+        ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)

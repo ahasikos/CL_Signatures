@@ -6,25 +6,23 @@
 #include <utils/utils.h>
 #include <pair_BN254.h>
 
-void schemeB_generate_sk(schemeB_secret_key *sk, csprng *prng) {
+void schemeB_generate_sk(schemeB_sk *sk, csprng *prng) {
     BIG_256_56_random(sk->x, prng);
     BIG_256_56_random(sk->y, prng);
     BIG_256_56_random(sk->z, prng);
 }
 
-void schemeB_generate_pk(schemeB_public_key *pk, schemeB_secret_key *sk) {
-    ECP2_BN254_generator(&pk->g_2);
-
-    ECP2_BN254_copy(&pk->Y, &pk->g_2);
-    ECP2_BN254_copy(&pk->X, &pk->g_2);
-    ECP2_BN254_copy(&pk->Z, &pk->g_2);
+void schemeB_generate_pk(schemeB_pk *pk, schemeB_sk *sk) {
+    ECP2_BN254_generator(&pk->Y);
+    ECP2_BN254_generator(&pk->X);
+    ECP2_BN254_generator(&pk->Z);
 
     PAIR_BN254_G2mul(&pk->X, sk->x);
     PAIR_BN254_G2mul(&pk->Y, sk->y);
     PAIR_BN254_G2mul(&pk->Z, sk->z);
 }
 
-void schemeB_sign(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_secret_key *sk, csprng *prng) {
+void schemeB_sign(schemeB_sig *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_sk *sk, csprng *prng) {
     //Generate random element
     FP_BN254 rnd;
     FP_BN254_rand(&rnd, prng);
@@ -64,17 +62,20 @@ void schemeB_sign(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomn
     ECP_BN254_add(&sig->c, &A_times_xyr);
 }
 
-int schemeB_verify(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_public_key *pk) {
+int schemeB_verify(schemeB_sig *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_pk *pk) {
     int res = 0;
     //Verification 1
 
-    res += pairing_and_equality_check(&pk->Z, &sig->a, &pk->g_2, &sig->A);
+    ECP2_BN254 G2;
+    ECP2_BN254_generator(&G2);
+
+    res += pairing_and_equality_check(&pk->Z, &sig->a, &G2, &sig->A);
 
     //Verification 2
-    res += pairing_and_equality_check(&pk->Y, &sig->a, &pk->g_2, &sig->b);
+    res += pairing_and_equality_check(&pk->Y, &sig->a, &G2, &sig->b);
 
     //Verification 3
-    res += pairing_and_equality_check(&pk->Y, &sig->A, &pk->g_2, &sig->B);
+    res += pairing_and_equality_check(&pk->Y, &sig->A, &G2, &sig->B);
 
     //Verification 4
     FP12_BN254 rhs, lhs;
@@ -88,8 +89,9 @@ int schemeB_verify(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 random
 
     three_element_pairing_and_multiplication(&lhs, &pk->X, &sig->a, &pk->X, &b_times_m, &pk->X, &B_times_r);
 
-    PAIR_BN254_ate(&rhs, &pk->g_2, &sig->c);
+    PAIR_BN254_ate(&rhs, &G2, &sig->c);
     PAIR_BN254_fexp(&rhs);
+
     res += FP12_BN254_equals(&lhs, &rhs);
 
     if( res == 4 ) return 1;

@@ -8,7 +8,7 @@
 #include <params.h>
 
 void
-sign_commitment(schemeD_signature *sig, ECP_BN254 *commitment, schemeD_secret_key *sk, csprng *prng) {
+sign_commitment(schemeD_sig *sig, ECP_BN254 *commitment, schemeD_sk *sk, csprng *prng) {
     BIG_256_56 alpha;
     BIG_256_56_random(alpha, prng);
 

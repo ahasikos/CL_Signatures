@@ -8,7 +8,7 @@
 
 #include "PoK_message.h"
 
-void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeD_public_key *public_key) {
+void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeD_pk *public_key) {
     ECP2_BN254 g_times_m_zero;
 
     ECP2_BN254_copy(&g_times_m_zero, &public_key->g_2);
@@ -29,7 +29,7 @@ void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeD_pu
     ECP2_BN254_add(commitment, &sum);
 }
 
-void commitment_conversion(ECP_BN254 *commitment, schemeD_secret_key *sk, schemeD_signature *sig, BIG_256_56 *message) {
+void commitment_conversion(ECP_BN254 *commitment, schemeD_sk *sk, schemeD_sig *sig, BIG_256_56 *message) {
 
     ECP_BN254 g_times_m_zero;
 
@@ -54,7 +54,7 @@ void commitment_conversion(ECP_BN254 *commitment, schemeD_secret_key *sk, scheme
     ECP_BN254_add(commitment, &sum);
 }
 
-void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeD_public_key *public_key, csprng *prng) {
+void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeD_pk *public_key, csprng *prng) {
 
     //Generate t
     for(int i = 0; i < public_key->l; i++) {
@@ -92,7 +92,7 @@ void prover_2(BIG_256_56 *s, BIG_256_56 c, BIG_256_56 *t, BIG_256_56 *message, u
     }
 }
 
-int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c, schemeD_public_key *public_key) {
+int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c, schemeD_pk *public_key) {
 
     ECP2_BN254 rhs, g_times_s_zero;
 

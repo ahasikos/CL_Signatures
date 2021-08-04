@@ -3,15 +3,15 @@
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
       <config projectName="cl_signatures" targetName="test_cl_signatures" />
-      <config projectName="cl_signatures" targetName="test_anonymous_credentials" />
+      <config projectName="cl_signatures" targetName="sign_commitment" />
       <config projectName="cl_signatures" targetName="test_zkPoK" />
-      <config projectName="cl_signatures" targetName="signature_on_committed_value" />
       <config projectName="cl_signatures" targetName="utils" />
       <config projectName="cl_signatures" targetName="schemeD" />
       <config projectName="cl_signatures" targetName="schemeC" />
       <config projectName="cl_signatures" targetName="PoK_message" />
       <config projectName="cl_signatures" targetName="schemeB" />
       <config projectName="cl_signatures" targetName="schemeA" />
+      <config projectName="cl_signatures" targetName="PoK_signature" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -21,26 +21,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/commitment_schemes/PoK_message/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/signatures/schemeA/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/signatures/schemeB/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/signatures/schemeC/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/signatures/schemeD/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sign_commitment/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_A/schemeA_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeA/schemeA.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_A/schemeA_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeA/schemeA.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_B/schemeB_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeB/schemeB.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_B/schemeB_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeB/schemeB.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_C/schemeC_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeC/schemeC.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_C/schemeC_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeC/schemeC.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_D/schemeD_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeD/schemeD.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scheme_D/schemeD_signatures.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeD/schemeD.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.c" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.h" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.h" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.c" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.h" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/commitment_schemes/PoK_signature/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.c" beforeDir="false" afterPath="$PROJECT_DIR$/sign_commitment/sign_commitment.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" beforeDir="false" afterPath="$PROJECT_DIR$/sign_commitment/sign_commitment.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.h" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signatures/schemeA/schemeA.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeA/schemeA.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signatures/schemeA/schemeA.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeA/schemeA.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signatures/schemeB/schemeB.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeB/schemeB.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signatures/schemeB/schemeB.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeB/schemeB.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signatures/schemeC/schemeC.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeC/schemeC.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signatures/schemeC/schemeC.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeC/schemeC.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signatures/schemeD/schemeD.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeD/schemeD.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signatures/schemeD/schemeD.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeD/schemeD.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_cl_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_cl_signatures.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_zkPoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_zkPoK.c" afterDir="false" />
     </list>
@@ -97,19 +95,25 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/commitment_schemes/PoK_signature" />
       <recent name="$PROJECT_DIR$/commitment_schemes/PoK_message" />
       <recent name="$PROJECT_DIR$/commitment_schemes" />
       <recent name="$PROJECT_DIR$/signatures" />
       <recent name="$PROJECT_DIR$/scheme_A" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.test_zkPoK">
+  <component name="RunManager" selected="CMake Application.test_cl_signatures">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
     <configuration name="PoK_message" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="PoK_message" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PoK_signature" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="PoK_signature" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -134,12 +138,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="signature_on_committed_value" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="signature_on_committed_value" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="test_anonymous_credentials" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="test_anonymous_credentials" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="cl_signatures" RUN_TARGET_NAME="test_anonymous_credentials">
+    <configuration name="sign_commitment" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="cl_signatures" TARGET_NAME="sign_commitment" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -165,12 +164,12 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.signature_on_committed_value" />
-      <item itemvalue="CMake Application.test_anonymous_credentials" />
+      <item itemvalue="CMake Application.sign_commitment" />
       <item itemvalue="CMake Application.test_cl_signatures" />
       <item itemvalue="CMake Application.test_zkPoK" />
       <item itemvalue="CMake Application.utils" />
       <item itemvalue="CMake Application.PoK_message" />
+      <item itemvalue="CMake Application.PoK_signature" />
       <item itemvalue="CMake Application.schemeA" />
       <item itemvalue="CMake Application.schemeB" />
       <item itemvalue="CMake Application.schemeC" />
@@ -198,7 +197,7 @@
       <workItem from="1626938605035" duration="15469000" />
       <workItem from="1627464953092" duration="17602000" />
       <workItem from="1627635251269" duration="2881000" />
-      <workItem from="1627994418857" duration="22284000" />
+      <workItem from="1627994418857" duration="25366000" />
     </task>
     <servers />
   </component>
@@ -215,7 +214,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/test_cl_signatures.c</url>
-          <line>127</line>
+          <line>111</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -224,17 +223,17 @@
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c</url>
+          <url>file://$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c</url>
           <line>179</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c</url>
+          <url>file://$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c</url>
           <line>177</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c</url>
+          <url>file://$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c</url>
           <line>168</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>

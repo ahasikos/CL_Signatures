@@ -7,23 +7,44 @@
 #include <pair_BN254.h>
 #include <string.h>
 
-void schemeC_init_secret_key(schemeC_secret_key *sk, BIG_256_56 *buf, uint32_t number_of_messages) {
+void schemeC_init_keypair(schemeC_sk* sk, schemeC_pk *pk, uint32_t number_of_messages) {
+    sk->z = malloc(sizeof(BIG_256_56) * number_of_messages);
     sk->l = number_of_messages;
-    sk->z = buf;
-}
 
-void schemeC_init_public_key(schemeC_public_key *pk, ECP2_BN254 *buf, uint32_t number_of_messages) {
+    pk->Z = malloc(sizeof(ECP2_BN254) * number_of_messages);
     pk->l = number_of_messages;
-    pk->Z = buf;
 }
 
-void schemeC_init_signature(schemeC_signature *sig, ECP_BN254 *buf_A, ECP_BN254 *buf_B, uint32_t number_of_messages) {
+void schemeC_destroy_keypair(schemeC_sk* sk, schemeC_pk *pk) {
+    memset(sk->x, 0, sizeof(BIG_256_56));
+    memset(sk->y, 0, sizeof(BIG_256_56));
+    memset(sk->z, 0, (sk->l * sizeof(BIG_256_56)));
+    free(sk->z);
+
+    memset(&pk->X, 0, sizeof(ECP2_BN254));
+    memset(&pk->Y, 0, sizeof(ECP2_BN254));
+    memset(pk->Z, 0, (pk->l * sizeof(ECP2_BN254)));
+    free(pk->Z);
+}
+
+void schemeC_init_signature(schemeC_sig *sig, uint32_t number_of_messages) {
+    sig->A = malloc(sizeof(ECP_BN254) * number_of_messages);
+    sig->B = malloc(sizeof(ECP_BN254) * number_of_messages);
     sig->l = number_of_messages;
-    sig->A = buf_A;
-    sig->B = buf_B;
 }
 
-void schemeC_generate_sk(schemeC_secret_key *sk, csprng *prng) {
+void schemeC_destroy_signature(schemeC_sig *sig) {
+    memset(&sig->a, 0, sizeof(ECP_BN254));
+    memset(&sig->b, 0, sizeof(ECP_BN254));
+    memset(&sig->c, 0, sizeof(ECP_BN254));
+    memset(sig->A, 0, (sig->l * sizeof(ECP_BN254)));
+    memset(sig->B, 0, (sig->l * sizeof(ECP_BN254)));
+
+    free(sig->A);
+    free(sig->B);
+}
+
+void schemeC_generate_sk(schemeC_sk *sk, csprng *prng) {
     BIG_256_56_random(sk->x, prng);
     BIG_256_56_random(sk->y, prng);
 
@@ -32,22 +53,21 @@ void schemeC_generate_sk(schemeC_secret_key *sk, csprng *prng) {
     }
 }
 
-void schemeC_generate_pk(schemeC_public_key *pk, schemeC_secret_key *sk) {
-    ECP2_BN254_generator(&pk->g_2);
+void schemeC_generate_pk(schemeC_pk *pk, schemeC_sk *sk) {
 
-    ECP2_BN254_copy(&pk->Y, &pk->g_2);
-    ECP2_BN254_copy(&pk->X, &pk->g_2);
+    ECP2_BN254_generator(&pk->Y);
+    ECP2_BN254_generator(&pk->X);
 
     PAIR_BN254_G2mul(&pk->X, sk->x);
     PAIR_BN254_G2mul(&pk->Y, sk->y);
 
     for(int i = 0; i < pk->l; i++) {
-        ECP2_BN254_copy(&pk->Z[i], &pk->g_2);
+        ECP2_BN254_generator(&pk->Z[i]);
         PAIR_BN254_G2mul(&pk->Z[i], sk->z[i]);
     }
 }
 
-void schemeC_sign(schemeC_signature *sig, BIG_256_56 *message, schemeC_secret_key *sk, csprng *prng) {
+void schemeC_sign(schemeC_sig *sig, BIG_256_56 *message, schemeC_sk *sk, csprng *prng) {
     //Generate random element
     FP_BN254 rnd;
     FP_BN254_rand(&rnd, prng);
@@ -98,22 +118,25 @@ void schemeC_sign(schemeC_signature *sig, BIG_256_56 *message, schemeC_secret_ke
     ECP_BN254_add(&sig->c, &sum);
 }
 
-int schemeC_verify(schemeC_signature *sig, BIG_256_56 *message, schemeC_public_key *pk) {
+int schemeC_verify(schemeC_sig *sig, BIG_256_56 *message, schemeC_pk *pk) {
     int res = 0, v1 = 0, v2 = 0;
+
+    ECP2_BN254 G2;
+    ECP2_BN254_generator(&G2);
 
     //Verification 1
     for(int i = 0; i < pk->l; i++) {
-        v1 += pairing_and_equality_check(&pk->Z[i], &sig->a, &pk->g_2, &sig->A[i]);
+        v1 += pairing_and_equality_check(&pk->Z[i], &sig->a, &G2, &sig->A[i]);
     }
 
     if( v1 == pk->l ) res ++;
 
     //Verification 2
-    res += pairing_and_equality_check(&pk->Y, &sig->a, &pk->g_2, &sig->b);
+    res += pairing_and_equality_check(&pk->Y, &sig->a, &G2, &sig->b);
 
     //Verification 3
     for(int i = 0; i < pk->l; i++) {
-        v2 += pairing_and_equality_check(&pk->Y, &sig->A[i], &pk->g_2, &sig->B[i]);
+        v2 += pairing_and_equality_check(&pk->Y, &sig->A[i], &G2, &sig->B[i]);
     }
 
     if( v2 == pk->l ) res++;
@@ -143,7 +166,7 @@ int schemeC_verify(schemeC_signature *sig, BIG_256_56 *message, schemeC_public_k
     FP12_BN254_copy(&lhs, &Xa_times_Xb);
     FP12_BN254_mul(&lhs, &inner_product);
 
-    PAIR_BN254_ate(&rhs, &pk->g_2, &sig->c);
+    PAIR_BN254_ate(&rhs, &G2, &sig->c);
     PAIR_BN254_fexp(&rhs);
 
     res += FP12_BN254_equals(&lhs, &rhs);

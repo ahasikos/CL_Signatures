@@ -14,14 +14,13 @@ typedef struct {
     BIG_256_56 x;
     BIG_256_56 y;
     BIG_256_56 z;
-} schemeB_secret_key;
+} schemeB_sk;
 
 typedef struct {
     ECP2_BN254 X;
     ECP2_BN254 Y;
     ECP2_BN254 Z;
-    ECP2_BN254 g_2;
-} schemeB_public_key;
+} schemeB_pk;
 
 typedef struct {
     ECP_BN254 a;
@@ -29,14 +28,14 @@ typedef struct {
     ECP_BN254 b;
     ECP_BN254 B;
     ECP_BN254 c;
-}schemeB_signature;
+}schemeB_sig;
 
-void schemeB_generate_sk(schemeB_secret_key *sk, csprng *prng);
+void schemeB_generate_sk(schemeB_sk *sk, csprng *prng);
 
-void schemeB_generate_pk(schemeB_public_key *pk, schemeB_secret_key *sk);
+void schemeB_generate_pk(schemeB_pk *pk, schemeB_sk *sk);
 
-void schemeB_sign(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_secret_key *sk, csprng *prng);
+void schemeB_sign(schemeB_sig *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_sk *sk, csprng *prng);
 
-int schemeB_verify(schemeB_signature *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_public_key *pk);
+int schemeB_verify(schemeB_sig *sig, BIG_256_56 message, BIG_256_56 randomness, schemeB_pk *pk);
 
 #endif //CL_SIGNATURES_SCHEMEB_H

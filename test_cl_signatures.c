@@ -12,9 +12,9 @@
 #include "signatures/schemeB/schemeB.h"
 
 void test_scheme_A(csprng *prng) {
-    schemeA_secret_key sk;
-    schemeA_public_key pk;
-    schemeA_signature sig;
+    schemeA_sk sk;
+    schemeA_pk pk;
+    schemeA_sig sig;
 
     schemeA_generate_sk(&sk, prng);
 
@@ -33,9 +33,9 @@ void test_scheme_A(csprng *prng) {
 }
 
 void test_scheme_B(csprng *prng) {
-    schemeB_secret_key sk;
-    schemeB_public_key pk;
-    schemeB_signature sig;
+    schemeB_sk sk;
+    schemeB_pk pk;
+    schemeB_sig sig;
 
     schemeB_generate_sk(&sk, prng);
 
@@ -64,38 +64,28 @@ void test_scheme_C(csprng *prng) {
         BIG_256_56_random(message[i], prng);
     }
 
-    schemeC_secret_key sk;
-    BIG_256_56 *z_big_buf = malloc(sizeof(BIG_256_56) * number_of_messages);
-    schemeC_init_secret_key(&sk, z_big_buf, number_of_messages);
-    schemeC_generate_sk(&sk, prng);
+    schemeC_sk sk;
+    schemeC_pk pk;
 
-    schemeC_public_key pk;
-    ECP2_BN254 *Z_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
-    schemeC_init_public_key(&pk, Z_ECP_buf, number_of_messages);
+    schemeC_init_keypair(&sk, &pk, number_of_messages);
+    schemeC_generate_sk(&sk, prng);
     schemeC_generate_pk(&pk, &sk);
 
-    schemeC_signature sig;
-    ECP_BN254 *A_ECP_buf = malloc(sizeof(ECP_BN254) * number_of_messages);
-    ECP_BN254 *B_ECP_buf = malloc(sizeof(ECP_BN254) * number_of_messages);
-    schemeC_init_signature(&sig, A_ECP_buf, B_ECP_buf, number_of_messages);
+    schemeC_sig sig;
+    schemeC_init_signature(&sig, number_of_messages);
 
     schemeC_sign(&sig, message, &sk, prng);
 
     if(! schemeC_verify(&sig, message, &pk)) res = 0;
 
-
     //Negative test change message to 0
     memset(message, 0, number_of_messages * (sizeof(BIG_256_56)));
     if(schemeC_verify(&sig, message, &pk)) res = 0;
 
-    if(res) {
-        printf("Success\n");
-    } else {
-        printf("Failure\n");
-    }
+    res ? printf("Success\n") : printf("Failure\n");
 
-    free(z_big_buf);
-    free(Z_ECP_buf);
+    schemeC_destroy_keypair(&sk, &pk);
+    schemeC_destroy_signature(&sig);
 }
 
 void test_scheme_D(csprng *prng) {
@@ -107,41 +97,28 @@ void test_scheme_D(csprng *prng) {
         BIG_256_56_random(message[i], prng);
     }
 
-    schemeD_secret_key sk;
-    BIG_256_56 *z_big_buf = malloc(sizeof(BIG_256_56) * number_of_messages);
-    schemeD_init_secret_key(&sk, z_big_buf, number_of_messages);
-    schemeD_generate_sk(&sk, prng);
+    schemeD_sk sk;
+    schemeD_pk pk;
 
-    schemeD_public_key pk;
-    ECP2_BN254 *Z_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
-    ECP2_BN254 *W_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
-    schemeD_init_public_key(&pk, Z_ECP_buf, W_ECP_buf, number_of_messages);
+    schemeD_init_keypair(&sk, &pk, number_of_messages);
+    schemeD_generate_sk(&sk, prng);
     schemeD_generate_pk(&pk, &sk);
 
-    schemeD_signature sig;
-    ECP_BN254 *A_ECP_buf = malloc(sizeof(ECP_BN254) * number_of_messages);
-    ECP_BN254 *B_ECP_buf = malloc(sizeof(ECP_BN254) * number_of_messages);
-    schemeD_init_signature(&sig, A_ECP_buf, B_ECP_buf, number_of_messages);
+    schemeD_sig sig;
+    schemeD_init_signature(&sig, number_of_messages);
 
     schemeD_sign(&sig, message, &sk, prng);
 
     if(! schemeD_verify(&sig, message, &pk)) res = 0;
 
-
     //Negative test change message to 0
     memset(message, 0, number_of_messages * (sizeof(BIG_256_56)));
     if(schemeD_verify(&sig, message, &pk)) res = 0;
 
-    if(res) {
-        printf("Success\n");
-    } else {
-        printf("Failure\n");
-    }
+    res ? printf("Success\n") : printf("Failure\n");
 
-    free(z_big_buf);
-    free(Z_ECP_buf);
-    free(A_ECP_buf);
-    free(B_ECP_buf);
+    schemeD_destroy_keypair(&sk, &pk);
+    schemeD_destroy_signature(&sig);
 }
 
 int main() {

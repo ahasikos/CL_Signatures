@@ -5,4 +5,4 @@ set(CMAKE_C_STANDARD 99)
 
 include_directories(${CMAKE_SOURCE_DIR}/core/c)
 
-add_library(PoK_signature PoK_signature.c)
+add_library(utils utils.c)

@@ -2,13 +2,13 @@
 // Created by Alexandros Hasikos on 22/07/2021.
 //
 
-#include "signature_PoK.h"
+#include "PoK_signature.h"
 #include "params.h"
 
 #include <pair_BN254.h>
 #include <utils/utils.h>
 
-void PoK_compute_blind_signature(schemeD_signature *blind_sig, schemeD_signature *sig, PoK_proof *proof, csprng *prng) {
+void PoK_compute_blind_signature(schemeD_sig *blind_sig, schemeD_sig *sig, PoK_proof *proof, csprng *prng) {
     BIG_256_56 r_prime;
     BIG_256_56_random(r_prime, prng);
 
@@ -32,8 +32,8 @@ void PoK_compute_blind_signature(schemeD_signature *blind_sig, schemeD_signature
     }
 }
 
-void PoK_generate_commitment(FP12_BN254 *commitment, PoK_proof *proof, BIG_256_56 *message, schemeD_public_key *pk,
-                             schemeD_signature *blind_sig) {
+void PoK_generate_commitment(FP12_BN254 *commitment, PoK_proof *proof, BIG_256_56 *message, schemeD_pk *pk,
+                             schemeD_sig *blind_sig) {
 
     FP12_BN254 Vx, Vxy, Vxy_i, prod;
     ECP_BN254 B_times_m_i, b_blind, a_blind;
@@ -67,7 +67,7 @@ void PoK_generate_commitment(FP12_BN254 *commitment, PoK_proof *proof, BIG_256_5
 }
 
 void
-PoK_prover_1(FP12_BN254 *T, BIG_256_56 t1, BIG_256_56 *t2, schemeD_public_key *public_key, schemeD_signature *blind_sig,
+PoK_prover_1(FP12_BN254 *T, BIG_256_56 t1, BIG_256_56 *t2, schemeD_pk *public_key, schemeD_sig *blind_sig,
              csprng *prng) {
 
     FP12_BN254_one(T);
@@ -110,7 +110,7 @@ PoK_prover_1(FP12_BN254 *T, BIG_256_56 t1, BIG_256_56 *t2, schemeD_public_key *p
 }
 
 void PoK_prover_2(BIG_256_56 s1, BIG_256_56 *s2, BIG_256_56 c, BIG_256_56 t1, BIG_256_56 *t2, BIG_256_56 *message,
-                  PoK_proof *proof, schemeD_signature *sig) {
+                  PoK_proof *proof, schemeD_sig *sig) {
 
     BIG_256_56 tmp;
 
@@ -128,7 +128,7 @@ void PoK_prover_2(BIG_256_56 s1, BIG_256_56 *s2, BIG_256_56 c, BIG_256_56 t1, BI
 
 
 int PoK_verifier(BIG_256_56 s1, BIG_256_56 *s2, BIG_256_56 c, FP12_BN254 *T, FP12_BN254 *commitment,
-                 schemeD_public_key *public_key, schemeD_signature *blind_sig) {
+                 schemeD_pk *public_key, schemeD_sig *blind_sig) {
 
     int res = 0;
 
