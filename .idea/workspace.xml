@@ -21,25 +21,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sign_commitment/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.c" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.h" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_message/PoK_message.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commitment_schemes/PoK_signature/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.c" beforeDir="false" afterPath="$PROJECT_DIR$/sign_commitment/sign_commitment.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" beforeDir="false" afterPath="$PROJECT_DIR$/sign_commitment/sign_commitment.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.h" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signatures/schemeA/schemeA.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeA/schemeA.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signatures/schemeA/schemeA.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeA/schemeA.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signatures/schemeB/schemeB.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeB/schemeB.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signatures/schemeB/schemeB.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeB/schemeB.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signatures/schemeC/schemeC.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeC/schemeC.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signatures/schemeC/schemeC.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeC/schemeC.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signatures/schemeD/schemeD.c" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeD/schemeD.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signatures/schemeD/schemeD.h" beforeDir="false" afterPath="$PROJECT_DIR$/signatures/schemeD/schemeD.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_cl_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_cl_signatures.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pairings_test/pairings_test.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pairings_test/pairings_test.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_anonymous_credentials.c" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/test_zkPoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_zkPoK.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -197,7 +181,7 @@
       <workItem from="1626938605035" duration="15469000" />
       <workItem from="1627464953092" duration="17602000" />
       <workItem from="1627635251269" duration="2881000" />
-      <workItem from="1627994418857" duration="25366000" />
+      <workItem from="1627994418857" duration="26992000" />
     </task>
     <servers />
   </component>
@@ -221,26 +205,6 @@
           <url>file://$PROJECT_DIR$/signatures/schemeD/schemeD.c</url>
           <line>117</line>
           <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c</url>
-          <line>179</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c</url>
-          <line>177</line>
-          <option name="timeStamp" value="35" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c</url>
-          <line>168</line>
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/test_zkPoK.c</url>
-          <line>126</line>
-          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -10,72 +10,73 @@
 #include <commitment_schemes/PoK_signature/PoK_signature.h>
 #include <utils/utils.h>
 
-void test_zkPoK_2(csprng *prng) {
-    const uint32_t number_of_messages = 32;
+#define NUMBER_OF_MESSAGES 32
+
+void create_key_pair(schemeD_sk *sk, schemeD_pk *pk, csprng *prng, uint32_t n) {
+    schemeD_init_keypair(sk, pk, n);
+    schemeD_generate_sk(sk, prng);
+    schemeD_generate_pk(pk, sk);
+}
+
+int execute_PoK_of_message_protocol_and_obtain_signature(schemeD_sig *sig, BIG_256_56 *message, schemeD_pk *user_pk,
+                                                         schemeD_sk *user_sk, schemeD_sk *signer_sk, csprng *prng) {
+    BIG_256_56 challenge, t[NUMBER_OF_MESSAGES], s[NUMBER_OF_MESSAGES];
+    ECP2_BN254 T, commitment;
+
+    generate_commitment(&commitment, message, user_pk);
+
+    //Prover(Compute T) -> Verifier
+    prover_1(&T, t, user_pk, prng);
+
+    //Compute challenge
+    BIG_256_56_random(challenge, prng);
+
+    //Prover(Compute s based on challenge) -> Verifier
+    prover_2(s, challenge, t, message, NUMBER_OF_MESSAGES);
+
+    //Verifier(Given T, commitment and s verify PoK) -> 1 or 0
+    if( ! verifier(&T, &commitment, s, challenge, user_pk)) return 0;
+
+    ECP_BN254 converted_commitment;
+
+    commitment_conversion(&converted_commitment, user_sk, sig, message);
+
+    sign_commitment(sig, &converted_commitment, signer_sk, prng);
+
+    return 1;
+}
+
+void test_zkPoK(csprng *prng) {
     int res = 0;
 
-    BIG_256_56 message[number_of_messages], t[number_of_messages], s[number_of_messages], challenge_1;
+    BIG_256_56 message[NUMBER_OF_MESSAGES], t[NUMBER_OF_MESSAGES], s[NUMBER_OF_MESSAGES], challenge_1;
 
     BIG_256_56_random(challenge_1, prng);
 
-    for(int i = 0; i < number_of_messages; i++) {
+    for(int i = 0; i < NUMBER_OF_MESSAGES; i++) {
         BIG_256_56_random(message[i], prng);
     }
 
     //User key pair
     schemeD_sk user_sk;
     schemeD_pk user_pk;
-
-    schemeD_init_keypair(&user_sk, &user_pk, number_of_messages);
-    schemeD_generate_sk(&user_sk, prng);
-    schemeD_generate_pk(&user_pk, &user_sk);
+    create_key_pair(&user_sk, &user_pk, prng, NUMBER_OF_MESSAGES);
 
 
     //Signer key pair
     schemeD_sk signer_sk;
     schemeD_pk signer_pk;
+    create_key_pair(&signer_sk, &signer_pk, prng, NUMBER_OF_MESSAGES);
 
-    schemeD_init_keypair(&signer_sk, &signer_pk, number_of_messages);
-    schemeD_generate_sk(&signer_sk, prng);
-    schemeD_generate_pk(&signer_pk, &signer_sk);
-
-
-    //Obtain signature on commited value
-    ECP2_BN254 T;
-
-    ECP2_BN254 commitment_1;
-
-    generate_commitment(&commitment_1, message, &user_pk);
-
-    //Prover -> Compute T
-    prover_1(&T, t, &user_pk, prng);
-
-    //Verifier -> Send challenge_2 challenge_1 to prover
-    prover_2(s, challenge_1, t, message, number_of_messages);
-
-    //Prover -> Send s to PoK_verifier
-    verifier(&T, &commitment_1, s, challenge_1, &user_pk) ? res++ : (res = 0);
-
-    //Get signature on commited value given the PoK of message succeeded
-
+    //Execute PoK of message protocol and obtain signature
     schemeD_sig sig;
-    schemeD_init_signature(&sig, number_of_messages);
+    schemeD_init_signature(&sig, NUMBER_OF_MESSAGES);
 
-    ECP_BN254 converted_commitment;
+    execute_PoK_of_message_protocol_and_obtain_signature(&sig, message, &user_pk, &user_sk, &signer_sk, prng) ? res++ : (res = 0);
 
-    commitment_conversion(&converted_commitment, &user_sk, &sig, message);
-
-    ECP_BN254 g_1;
-    ECP_BN254_generator(&g_1);
-    ECP2_BN254 g_2;
-    ECP2_BN254_generator(&g_2);
-
-
-    sign_commitment(&sig, &converted_commitment, &signer_sk, prng);
-
+    //Compute blind singature
     schemeD_sig blind_sig;
-    schemeD_init_signature(&blind_sig, number_of_messages);
-
+    schemeD_init_signature(&blind_sig, NUMBER_OF_MESSAGES);
 
     PoK_proof proof;
     BIG_256_56_random(proof.r, prng);
@@ -88,12 +89,12 @@ void test_zkPoK_2(csprng *prng) {
 
     FP12_BN254 T_2;
     BIG_256_56 t1;
-    BIG_256_56 t2[number_of_messages];
+    BIG_256_56 t2[NUMBER_OF_MESSAGES];
 
     PoK_prover_1(&T_2, t1, t2, &signer_pk, &blind_sig, prng);
 
     BIG_256_56 s1, challenge_2;
-    BIG_256_56 s2[number_of_messages];
+    BIG_256_56 s2[NUMBER_OF_MESSAGES];
 
     BIG_256_56_random(challenge_2, prng);
 
@@ -127,12 +128,10 @@ int main() {
 
     RAND_seed(&prng, sizeof(seed), seed);
     //---------------------------------------------------
-
-//    printf("Testing sign_commitment...");
-//    test_zkPoK_1(&prng);
+    
 
     printf("Testing signature_on_committed_value_2...");
-    test_zkPoK_2(&prng);
+    test_zkPoK(&prng);
 
     return 0;
 }
