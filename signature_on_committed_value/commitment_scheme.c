@@ -19,7 +19,7 @@ void generate_commitment(octet *commitment, BIG_256_56 *message, schemeD_public_
     ECP2_BN254_inf(&sum);
 
     for(int i = 1; i < public_key->l; i++) {
-        ECP2_BN254_copy(&Z_i_times_m_i, &public_key->Z[i - 1]);
+        ECP2_BN254_copy(&Z_i_times_m_i, &public_key->Z[i]);
         PAIR_BN254_G2mul(&Z_i_times_m_i, message[i]);
 
         ECP2_BN254_add(&sum, &Z_i_times_m_i);
@@ -91,7 +91,6 @@ int verifier(ECP2_BN254 *T, octet *commitment, BIG_256_56 *s, BIG_256_56 c, sche
     ECP2_BN254 M_times_c, lhs;
 
     ECP2_BN254_fromOctet(&M_times_c, commitment);
-//    ECP2_BN254_copy(&M_times_c, commitment);
     PAIR_BN254_G2mul(&M_times_c, c);
 
     ECP2_BN254_add(&M_times_c, T);

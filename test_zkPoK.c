@@ -148,7 +148,7 @@ void test_zkPoK_2(csprng *prng) {
 
     PoK_verifier(s1, s2, challenge_2, &T_2, &commitment_2, &user_pk, &blind_sig) ? res++ : (res = 0);
 
-    res ? (printf("Success\n")) : (printf("Failure\n"));
+    res == 2 ? (printf("Success\n")) : (printf("Failure\n"));
 }
 
 int main() {
