@@ -2,7 +2,7 @@
 // Created by Alexandros Hasikos on 09/07/2021.
 //
 
-#include "schemeC_signatures.h"
+#include "schemeC.h"
 #include <utils/utils.h>
 #include <pair_BN254.h>
 #include <string.h>

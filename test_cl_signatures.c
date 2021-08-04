@@ -6,10 +6,10 @@
 #include <bls_BN254.h>
 #include <string.h>
 
-#include "scheme_D/schemeD_signatures.h"
-#include "scheme_C/schemeC_signatures.h"
-#include "scheme_A/schemeA_signatures.h"
-#include "scheme_B/schemeB_signatures.h"
+#include "signatures/schemeD/schemeD.h"
+#include "signatures/schemeC/schemeC.h"
+#include "signatures/schemeA/schemeA.h"
+#include "signatures/schemeB/schemeB.h"
 
 void test_scheme_A(csprng *prng) {
     schemeA_secret_key sk;

@@ -2,8 +2,8 @@
 // Created by Alexandros Hasikos on 09/07/2021.
 //
 
-#ifndef CL_SIGNATURES_SCHEMEC_SIGNATURES_H
-#define CL_SIGNATURES_SCHEMEC_SIGNATURES_H
+#ifndef CL_SIGNATURES_SCHEMEC_H
+#define CL_SIGNATURES_SCHEMEC_H
 
 #include <core.h>
 #include <big_256_56.h>
@@ -48,4 +48,4 @@ void schemeC_sign(schemeC_signature *sig, BIG_256_56 *message, schemeC_secret_ke
 
 int schemeC_verify(schemeC_signature *sig, BIG_256_56 *message, schemeC_public_key *pk);
 
-#endif //CL_SIGNATURES_SCHEMEC_SIGNATURES_H
+#endif //CL_SIGNATURES_SCHEMEC_H

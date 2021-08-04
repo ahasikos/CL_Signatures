@@ -5,7 +5,7 @@
 #ifndef CL_SIGNATURES_SIGN_COMMITMENT_H
 #define CL_SIGNATURES_SIGN_COMMITMENT_H
 
-#include <scheme_D/schemeD_signatures.h>
+#include <signatures/schemeD/schemeD.h>
 
 void sign_commitment(schemeD_signature *sig, ECP_BN254 *commitment, schemeD_secret_key *sk, csprng *prng);
 

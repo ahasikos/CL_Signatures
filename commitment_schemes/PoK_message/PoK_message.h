@@ -2,14 +2,14 @@
 // Created by Alexandros Hasikos on 21/07/2021.
 //
 
-#ifndef CL_SIGNATURES_COMMITMENT_SCHEME_H
-#define CL_SIGNATURES_COMMITMENT_SCHEME_H
+#ifndef CL_SIGNATURES_POK_MESSAGE_H
+#define CL_SIGNATURES_POK_MESSAGE_H
 
 #include <big_256_56.h>
 #include <ecp2_BN254.h>
 #include <core.h>
 
-#include <scheme_D/schemeD_signatures.h>
+#include <signatures/schemeD/schemeD.h>
 
 void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeD_public_key *public_key);
 
@@ -21,4 +21,4 @@ void prover_2(BIG_256_56 *s, BIG_256_56 c, BIG_256_56 *t, BIG_256_56 *message, u
 
 int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c, schemeD_public_key *public_key);
 
-#endif //CL_SIGNATURES_COMMITMENT_SCHEME_H
+#endif //CL_SIGNATURES_POK_MESSAGE_H

@@ -2,7 +2,7 @@
 // Created by Alexandros Hasikos on 08/07/2021.
 //
 
-#include "schemeA_signatures.h"
+#include "schemeA.h"
 #include <utils/utils.h>
 
 #include <string.h>

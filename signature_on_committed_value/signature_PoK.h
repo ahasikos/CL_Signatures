@@ -5,7 +5,7 @@
 #ifndef CL_SIGNATURES_SIGNATURE_POK_H
 #define CL_SIGNATURES_SIGNATURE_POK_H
 
-#include <scheme_D/schemeD_signatures.h>
+#include <signatures/schemeD/schemeD.h>
 
 #include <fp12_BN254.h>
 

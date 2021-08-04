@@ -3,10 +3,10 @@
 //
 
 #include <pair_BN254.h>
-#include <scheme_D/schemeD_signatures.h>
+#include <signatures/schemeD/schemeD.h>
 #include <params.h>
 
-#include "commitment_scheme.h"
+#include "PoK_message.h"
 
 void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeD_public_key *public_key) {
     ECP2_BN254 g_times_m_zero;

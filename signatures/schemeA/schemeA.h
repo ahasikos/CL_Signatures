@@ -2,8 +2,8 @@
 // Created by Alexandros Hasikos on 08/07/2021.
 //
 
-#ifndef CL_SIGNATURES_SCHEMEA_SIGNATURES_H
-#define CL_SIGNATURES_SCHEMEA_SIGNATURES_H
+#ifndef CL_SIGNATURES_SCHEMEA_H
+#define CL_SIGNATURES_SCHEMEA_H
 
 #include <core.h>
 #include <big_256_56.h>
@@ -36,4 +36,4 @@ void schemeA_sign(schemeA_signature *sig, BIG_256_56 message, schemeA_secret_key
 int schemeA_verify(schemeA_signature *sig, BIG_256_56 message, schemeA_public_key *pk);
 
 
-#endif //CL_SIGNATURES_SCHEMEA_SIGNATURES_H
+#endif //CL_SIGNATURES_SCHEMEA_H

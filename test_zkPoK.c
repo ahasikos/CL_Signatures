@@ -2,10 +2,9 @@
 // Created by Alexandros Hasikos on 21/07/2021.
 //
 
-#include <signature_on_committed_value/commitment_scheme.h>
+#include <commitment_schemes/PoK_message/PoK_message.h>
 #include <bls_BN254.h>
-#include <scheme_D/schemeD_signatures.h>
-#include <scheme_C/schemeC_signatures.h>
+#include <signatures/schemeD/schemeD.h>
 #include <signature_on_committed_value/sign_commitment.h>
 #include <ecdh_BN254.h>
 #include <signature_on_committed_value/signature_PoK.h>
