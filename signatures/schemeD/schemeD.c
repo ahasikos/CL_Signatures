@@ -47,17 +47,6 @@ void schemeD_destroy_signature(schemeD_sig *sig) {
     free(sig->B);
 }
 
-void schemeD_init_secret_key(schemeD_sk *sk, BIG_256_56 *buf, uint32_t number_of_messages) {
-    sk->l = number_of_messages;
-    sk->z = buf;
-}
-
-void schemeD_init_public_key(schemeD_pk *pk, ECP2_BN254 *Z_buf, ECP2_BN254 *W_buf, uint32_t number_of_messages) {
-    pk->l = number_of_messages;
-    pk->Z = Z_buf;
-    pk->W = W_buf;
-}
-
 void schemeD_generate_sk(schemeD_sk *sk, csprng *prng) {
     BIG_256_56_random(sk->x, prng);
     BIG_256_56_random(sk->y, prng);

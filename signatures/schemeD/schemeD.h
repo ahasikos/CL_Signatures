@@ -40,10 +40,6 @@ void schemeD_init_keypair(schemeD_sk* sk, schemeD_pk *pk, uint32_t number_of_mes
 
 void schemeD_destroy_keypair(schemeD_sk* sk, schemeD_pk *pk);
 
-void schemeD_init_secret_key(schemeD_sk *sk, BIG_256_56 *buf, uint32_t number_of_messages);
-
-void schemeD_init_public_key(schemeD_pk *pk, ECP2_BN254 *Z_buf, ECP2_BN254 *W_buf, uint32_t number_of_messages);
-
 void schemeD_init_signature(schemeD_sig *sig, uint32_t number_of_messages);
 
 void schemeD_destroy_signature(schemeD_sig *sig);

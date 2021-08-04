@@ -102,7 +102,7 @@
       <recent name="$PROJECT_DIR$/scheme_A" />
     </key>
   </component>
-  <component name="RunManager" selected="CMake Application.test_cl_signatures">
+  <component name="RunManager" selected="CMake Application.test_zkPoK">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="CLION.EXTERNAL.BUILD" enabled="true" />

@@ -10,50 +10,6 @@
 #include <commitment_schemes/PoK_signature/PoK_signature.h>
 #include <utils/utils.h>
 
-
-//void test_zkPoK_1(csprng *prng) {
-//    const uint32_t number_of_messages = 32;
-//    int res;
-//
-//    BIG_256_56 message[number_of_messages], t[number_of_messages], s[number_of_messages], c;
-//
-//    BIG_256_56_random(c, prng);
-//
-//    for(int i = 0; i < number_of_messages; i++) {
-//        BIG_256_56_random(message[i], prng);
-//    }
-//
-//    schemeC_sk sk;
-//    BIG_256_56 *z_big_buf = malloc(sizeof(BIG_256_56) * number_of_messages);
-//    schemeC_init_secret_key(&sk, z_big_buf, number_of_messages);
-//    schemeC_generate_sk(&sk, prng);
-//
-//    schemeC_pk pk;
-//    ECP2_BN254 *Z_ECP_buf = malloc(sizeof(ECP2_BN254) * number_of_messages);
-//    schemeC_init_public_key(&pk, Z_ECP_buf, number_of_messages);
-//    schemeC_generate_pk(&pk, &sk);
-//
-//    ECP2_BN254 commitment, T;
-//
-//    //Generate commitment
-//    generate_commitment(&commitment, message, &pk);
-//
-//    prover_1(&T, t, &pk, prng);
-//
-//    prover_2(s, c, t, message, &pk);
-//
-//    res = PoK_verifier(&T, &commitment, s, c, &pk);
-//
-//    if(res) {
-//        printf("Success\n");
-//    } else {
-//        printf("Failure\n");
-//    }
-//
-//    free(z_big_buf);
-//    free(Z_ECP_buf);
-//}
-
 void test_zkPoK_2(csprng *prng) {
     const uint32_t number_of_messages = 32;
     int res = 0;
@@ -68,31 +24,23 @@ void test_zkPoK_2(csprng *prng) {
 
     //User key pair
     schemeD_sk user_sk;
-    BIG_256_56 user_z_big_buf[number_of_messages];
-    schemeD_init_secret_key(&user_sk, user_z_big_buf, number_of_messages);
-    schemeD_generate_sk(&user_sk, prng);
-
     schemeD_pk user_pk;
-    ECP2_BN254 user_Z_ECP_buf[number_of_messages];
-    ECP2_BN254 user_W_ECP_buf[number_of_messages];
-    schemeD_init_public_key(&user_pk, user_Z_ECP_buf, user_W_ECP_buf, number_of_messages);
+
+    schemeD_init_keypair(&user_sk, &user_pk, number_of_messages);
+    schemeD_generate_sk(&user_sk, prng);
     schemeD_generate_pk(&user_pk, &user_sk);
+
 
     //Signer key pair
     schemeD_sk signer_sk;
-    BIG_256_56 signer_z_big_buf[number_of_messages];
-    schemeD_init_secret_key(&signer_sk, signer_z_big_buf, number_of_messages);
-    schemeD_generate_sk(&signer_sk, prng);
-
     schemeD_pk signer_pk;
-    ECP2_BN254 signer_Z_ECP_buf[number_of_messages];
-    ECP2_BN254 signer_W_ECP_buf[number_of_messages];
-    schemeD_init_public_key(&signer_pk, signer_Z_ECP_buf, signer_W_ECP_buf, number_of_messages);
+
+    schemeD_init_keypair(&signer_sk, &signer_pk, number_of_messages);
+    schemeD_generate_sk(&signer_sk, prng);
     schemeD_generate_pk(&signer_pk, &signer_sk);
 
 
     //Obtain signature on commited value
-
     ECP2_BN254 T;
 
     ECP2_BN254 commitment_1;
@@ -111,9 +59,7 @@ void test_zkPoK_2(csprng *prng) {
     //Get signature on commited value given the PoK of message succeeded
 
     schemeD_sig sig;
-    ECP_BN254 A_ECP_buf[number_of_messages];
-    ECP_BN254 B_ECP_buf[number_of_messages];
-    schemeD_init_signature(&sig, A_ECP_buf, B_ECP_buf, number_of_messages);
+    schemeD_init_signature(&sig, number_of_messages);
 
     ECP_BN254 converted_commitment;
 
@@ -124,14 +70,11 @@ void test_zkPoK_2(csprng *prng) {
     ECP2_BN254 g_2;
     ECP2_BN254_generator(&g_2);
 
-    int q = pairing_and_equality_check(&commitment_1, &g_1, &g_2, &converted_commitment);
 
     sign_commitment(&sig, &converted_commitment, &signer_sk, prng);
 
     schemeD_sig blind_sig;
-    ECP_BN254 blind_sig_A_ECP_buf[number_of_messages];
-    ECP_BN254 blind_sig_B_ECP_buf[number_of_messages];
-    schemeD_init_signature(&blind_sig, blind_sig_A_ECP_buf, blind_sig_B_ECP_buf, number_of_messages);
+    schemeD_init_signature(&blind_sig, number_of_messages);
 
 
     PoK_proof proof;
@@ -159,6 +102,10 @@ void test_zkPoK_2(csprng *prng) {
     PoK_verifier(s1, s2, challenge_2, &T_2, &commitment_2, &signer_pk, &blind_sig) ? res++ : (res = 0);
 
     res == 2 ? (printf("Success\n")) : (printf("Failure\n"));
+
+    schemeD_destroy_keypair(&user_sk, &user_pk);
+    schemeD_destroy_keypair(&signer_sk, &signer_pk);
+    schemeD_destroy_signature(&sig);
 }
 
 int main() {
