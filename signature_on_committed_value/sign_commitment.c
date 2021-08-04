@@ -8,7 +8,7 @@
 #include <params.h>
 
 void
-sign_commitment(schemeD_signature *sig, octet *commitment, schemeD_secret_key *sk, csprng *prng) {
+sign_commitment(schemeD_signature *sig, ECP_BN254 *commitment, schemeD_secret_key *sk, csprng *prng) {
     BIG_256_56 alpha;
     BIG_256_56_random(alpha, prng);
 
@@ -39,7 +39,7 @@ sign_commitment(schemeD_signature *sig, octet *commitment, schemeD_secret_key *s
 
     ECP_BN254 M_times_alpha_xy;
 
-    ECP_BN254_fromOctet(&M_times_alpha_xy, commitment);
+    ECP_BN254_copy(&M_times_alpha_xy, commitment);
 
     PAIR_BN254_G1mul(&M_times_alpha_xy, alpha_xy);
 

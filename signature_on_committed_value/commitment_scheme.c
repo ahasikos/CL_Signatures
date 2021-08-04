@@ -4,29 +4,54 @@
 
 #include <pair_BN254.h>
 #include <scheme_D/schemeD_signatures.h>
+#include <params.h>
 
 #include "commitment_scheme.h"
 
-void generate_commitment(octet *commitment, BIG_256_56 *message, schemeD_public_key *public_key) {
-    ECP2_BN254 g_times_m_zero, tmp;
+void generate_commitment(ECP2_BN254 *commitment, BIG_256_56 *message, schemeD_public_key *public_key) {
+    ECP2_BN254 g_times_m_zero;
 
     ECP2_BN254_copy(&g_times_m_zero, &public_key->g_2);
     PAIR_BN254_G2mul(&g_times_m_zero, message[0]);
 
-    ECP2_BN254_copy(&tmp, &g_times_m_zero);
+    ECP2_BN254_copy(commitment, &g_times_m_zero);
 
-    ECP2_BN254 Z_i_times_m_i, sum;
+    ECP2_BN254 g_times_zi_times_mi, sum;
     ECP2_BN254_inf(&sum);
 
     for(int i = 1; i < public_key->l; i++) {
-        ECP2_BN254_copy(&Z_i_times_m_i, &public_key->Z[i]);
-        PAIR_BN254_G2mul(&Z_i_times_m_i, message[i]);
+        ECP2_BN254_copy(&g_times_zi_times_mi, &public_key->Z[i]);
+        PAIR_BN254_G2mul(&g_times_zi_times_mi, message[i]);
 
-        ECP2_BN254_add(&sum, &Z_i_times_m_i);
+        ECP2_BN254_add(&sum, &g_times_zi_times_mi);
     }
 
-    ECP2_BN254_add(&tmp, &sum);
-    ECP2_BN254_toOctet(commitment, &tmp, 0);
+    ECP2_BN254_add(commitment, &sum);
+}
+
+void commitment_conversion(ECP_BN254 *commitment, schemeD_secret_key *sk, schemeD_signature *sig, BIG_256_56 *message) {
+
+    ECP_BN254 g_times_m_zero;
+
+    ECP_BN254_generator(&g_times_m_zero);
+    PAIR_BN254_G1mul(&g_times_m_zero, message[0]);
+
+    ECP_BN254_copy(commitment, &g_times_m_zero);
+
+    ECP_BN254 g_times_zi_times_mi, sum;
+    BIG_256_56 zi_times_mi;
+    ECP_BN254_inf(&sum);
+
+    for(int i = 1; i < sk->l; i++) {
+        BIG_256_56_modmul(zi_times_mi, sk->z[i], message[i], MODULUS);
+
+        ECP_BN254_generator(&g_times_zi_times_mi);
+        PAIR_BN254_G1mul(&g_times_zi_times_mi, zi_times_mi);
+
+        ECP_BN254_add(&sum, &g_times_zi_times_mi);
+    }
+
+    ECP_BN254_add(commitment, &sum);
 }
 
 void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeD_public_key *public_key, csprng *prng) {
@@ -47,7 +72,7 @@ void prover_1(ECP2_BN254 *T, BIG_256_56 *t, schemeD_public_key *public_key, cspr
     ECP2_BN254_inf(&sum);
 
     for(int i = 1; i < public_key->l; i++) {
-        ECP2_BN254_copy(&Z_i_times_t_i, &public_key->Z[i - 1]);
+        ECP2_BN254_copy(&Z_i_times_t_i, &public_key->Z[i]);
         PAIR_BN254_G2mul(&Z_i_times_t_i, t[i]);
 
         ECP2_BN254_add(&sum, &Z_i_times_t_i);
@@ -67,7 +92,7 @@ void prover_2(BIG_256_56 *s, BIG_256_56 c, BIG_256_56 *t, BIG_256_56 *message, u
     }
 }
 
-int verifier(ECP2_BN254 *T, octet *commitment, BIG_256_56 *s, BIG_256_56 c, schemeD_public_key *public_key) {
+int verifier(ECP2_BN254 *T, ECP2_BN254 *commitment, BIG_256_56 *s, BIG_256_56 c, schemeD_public_key *public_key) {
 
     ECP2_BN254 rhs, g_times_s_zero;
 
@@ -80,7 +105,7 @@ int verifier(ECP2_BN254 *T, octet *commitment, BIG_256_56 *s, BIG_256_56 c, sche
     ECP2_BN254_inf(&sum);
 
     for(int i = 1; i < public_key->l; i++) {
-        ECP2_BN254_copy(&Z_i_times_s_i, &public_key->Z[i - 1]);
+        ECP2_BN254_copy(&Z_i_times_s_i, &public_key->Z[i]);
         PAIR_BN254_G2mul(&Z_i_times_s_i, s[i]);
 
         ECP2_BN254_add(&sum, &Z_i_times_s_i);
@@ -90,7 +115,7 @@ int verifier(ECP2_BN254 *T, octet *commitment, BIG_256_56 *s, BIG_256_56 c, sche
 
     ECP2_BN254 M_times_c, lhs;
 
-    ECP2_BN254_fromOctet(&M_times_c, commitment);
+    ECP2_BN254_copy(&M_times_c, commitment);
     PAIR_BN254_G2mul(&M_times_c, c);
 
     ECP2_BN254_add(&M_times_c, T);

@@ -9,6 +9,7 @@
 #include <signature_on_committed_value/sign_commitment.h>
 #include <ecdh_BN254.h>
 #include <signature_on_committed_value/signature_PoK.h>
+#include <utils/utils.h>
 
 
 //void test_zkPoK_1(csprng *prng) {
@@ -95,8 +96,7 @@ void test_zkPoK_2(csprng *prng) {
 
     ECP2_BN254 T;
 
-    char commitment_1_buf[EFS_BN254 * 5];
-    octet commitment_1 = {0, sizeof(commitment_1_buf), commitment_1_buf};
+    ECP2_BN254 commitment_1;
 
     generate_commitment(&commitment_1, message, &user_pk);
 
@@ -116,7 +116,18 @@ void test_zkPoK_2(csprng *prng) {
     ECP_BN254 B_ECP_buf[number_of_messages];
     schemeD_init_signature(&sig, A_ECP_buf, B_ECP_buf, number_of_messages);
 
-    sign_commitment(&sig, &commitment_1, &signer_sk, prng);
+    ECP_BN254 converted_commitment;
+
+    commitment_conversion(&converted_commitment, &user_sk, &sig, message);
+
+    ECP_BN254 g_1;
+    ECP_BN254_generator(&g_1);
+    ECP2_BN254 g_2;
+    ECP2_BN254_generator(&g_2);
+
+    int q = pairing_and_equality_check(&commitment_1, &g_1, &g_2, &converted_commitment);
+
+    sign_commitment(&sig, &converted_commitment, &signer_sk, prng);
 
     schemeD_signature blind_sig;
     ECP_BN254 blind_sig_A_ECP_buf[number_of_messages];
@@ -131,13 +142,13 @@ void test_zkPoK_2(csprng *prng) {
 
     FP12_BN254 commitment_2;
 
-    PoK_generate_commitment(&commitment_2, &proof, message, &user_pk, &blind_sig);
+    PoK_generate_commitment(&commitment_2, &proof, message, &signer_pk, &blind_sig);
 
     FP12_BN254 T_2;
     BIG_256_56 t1;
     BIG_256_56 t2[number_of_messages];
 
-    PoK_prover_1(&T_2, t1, t2, &user_pk, &blind_sig, prng);
+    PoK_prover_1(&T_2, t1, t2, &signer_pk, &blind_sig, prng);
 
     BIG_256_56 s1, challenge_2;
     BIG_256_56 s2[number_of_messages];
@@ -146,7 +157,7 @@ void test_zkPoK_2(csprng *prng) {
 
     PoK_prover_2(s1, s2, challenge_2, t1, t2, message, &proof, &blind_sig);
 
-    PoK_verifier(s1, s2, challenge_2, &T_2, &commitment_2, &user_pk, &blind_sig) ? res++ : (res = 0);
+    PoK_verifier(s1, s2, challenge_2, &T_2, &commitment_2, &signer_pk, &blind_sig) ? res++ : (res = 0);
 
     res == 2 ? (printf("Success\n")) : (printf("Failure\n"));
 }

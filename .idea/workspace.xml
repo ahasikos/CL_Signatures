@@ -22,7 +22,9 @@
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.c" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.h" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.c" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" beforeDir="false" afterPath="$PROJECT_DIR$/signature_on_committed_value/sign_commitment.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_zkPoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_zkPoK.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -155,7 +157,7 @@
       <workItem from="1626938605035" duration="15469000" />
       <workItem from="1627464953092" duration="17602000" />
       <workItem from="1627635251269" duration="2881000" />
-      <workItem from="1627994418857" duration="13729000" />
+      <workItem from="1627994418857" duration="20840000" />
     </task>
     <servers />
   </component>
@@ -186,9 +188,19 @@
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/signature_on_committed_value/commitment_scheme.c</url>
-          <line>95</line>
-          <option name="timeStamp" value="33" />
+          <url>file://$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c</url>
+          <line>177</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/signature_on_committed_value/signature_PoK.c</url>
+          <line>168</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/test_zkPoK.c</url>
+          <line>127</line>
+          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
