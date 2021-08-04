@@ -128,7 +128,7 @@ int main() {
 
     RAND_seed(&prng, sizeof(seed), seed);
     //---------------------------------------------------
-    
+
 
     printf("Testing signature_on_committed_value_2...");
     test_zkPoK(&prng);
