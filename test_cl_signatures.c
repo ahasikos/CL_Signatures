@@ -5,6 +5,7 @@
 #include <core.h>
 #include <bls_BN254.h>
 #include <string.h>
+#include <assert.h>
 
 #include "signatures/schemeD/schemeD.h"
 #include "signatures/schemeC/schemeC.h"
@@ -17,7 +18,6 @@ void test_scheme_A(csprng *prng) {
     schemeA_sig sig;
 
     schemeA_generate_sk(&sk, prng);
-
     schemeA_generate_pk(&pk, &sk);
 
     BIG_256_56 message;
@@ -25,11 +25,13 @@ void test_scheme_A(csprng *prng) {
 
     schemeA_sign(&sig, message, &sk, prng);
 
-    if(schemeA_verify(&sig, message, &pk)) {
-        printf("Success\n");
-    } else {
-        printf("Failure\n");
-    }
+    assert(schemeA_verify(&sig, message, &pk));
+
+    //Negative test change message to 0
+    memset(message, 0, (sizeof(BIG_256_56)));
+    assert(! schemeA_verify(&sig, message, &pk) );
+
+    printf("Success\n");
 }
 
 void test_scheme_B(csprng *prng) {
@@ -48,16 +50,17 @@ void test_scheme_B(csprng *prng) {
 
     schemeB_sign(&sig, message, randomness, &sk, prng);
 
-    if(schemeB_verify(&sig, message, randomness, &pk)) {
-        printf("Success\n");
-    } else {
-        printf("Failure\n");
-    }
+    assert(schemeB_verify(&sig, message, randomness, &pk));
+
+    //Negative test change message to 0
+    memset(message, 0, (sizeof(BIG_256_56)));
+    assert(! schemeB_verify(&sig, message, randomness, &pk) );
+
+    printf("Success\n");
 }
 
 void test_scheme_C(csprng *prng) {
     const uint32_t number_of_messages = 32;
-    int res = 1;
 
     BIG_256_56 message[number_of_messages];
     for(int i = 0; i < number_of_messages; i++) {
@@ -76,21 +79,20 @@ void test_scheme_C(csprng *prng) {
 
     schemeC_sign(&sig, message, &sk, prng);
 
-    if(! schemeC_verify(&sig, message, &pk)) res = 0;
+    assert(schemeC_verify(&sig, message, &pk));
 
     //Negative test change message to 0
     memset(message, 0, number_of_messages * (sizeof(BIG_256_56)));
-    if(schemeC_verify(&sig, message, &pk)) res = 0;
-
-    res ? printf("Success\n") : printf("Failure\n");
+    assert(! schemeC_verify(&sig, message, &pk) );
 
     schemeC_destroy_keypair(&sk, &pk);
     schemeC_destroy_signature(&sig);
+
+    printf("Success\n");
 }
 
 void test_scheme_D(csprng *prng) {
     const uint32_t number_of_messages = 32;
-    int res = 1;
 
     BIG_256_56 message[number_of_messages];
     for(int i = 0; i < number_of_messages; i++) {
@@ -109,16 +111,16 @@ void test_scheme_D(csprng *prng) {
 
     schemeD_sign(&sig, message, &sk, prng);
 
-    if(! schemeD_verify(&sig, message, &pk)) res = 0;
+    assert(schemeD_verify(&sig, message, &pk));
 
     //Negative test change message to 0
     memset(message, 0, number_of_messages * (sizeof(BIG_256_56)));
-    if(schemeD_verify(&sig, message, &pk)) res = 0;
-
-    res ? printf("Success\n") : printf("Failure\n");
+    assert(! schemeD_verify(&sig, message, &pk) );
 
     schemeD_destroy_keypair(&sk, &pk);
     schemeD_destroy_signature(&sig);
+
+    printf("Success\n");
 }
 
 int main() {

@@ -8,7 +8,7 @@
 #include <pair_BN254.h>
 #include <utils/utils.h>
 
-void PoK_compute_blind_signature(schemeD_sig *blind_sig, schemeD_sig *sig, PoK_proof *proof, csprng *prng) {
+void PoK_compute_blind_signature(schemeD_sig *blind_sig, schemeD_sig *sig, PoK_randomness *proof, csprng *prng) {
     BIG_256_56 r_prime;
     BIG_256_56_random(r_prime, prng);
 
@@ -32,7 +32,7 @@ void PoK_compute_blind_signature(schemeD_sig *blind_sig, schemeD_sig *sig, PoK_p
     }
 }
 
-void PoK_generate_commitment(FP12_BN254 *commitment, PoK_proof *proof, BIG_256_56 *message, schemeD_pk *pk,
+void PoK_generate_commitment(FP12_BN254 *commitment, PoK_randomness *proof, BIG_256_56 *message, schemeD_pk *pk,
                              schemeD_sig *blind_sig) {
 
     FP12_BN254 Vx, Vxy, Vxy_i, prod;
@@ -110,7 +110,7 @@ PoK_prover_1(FP12_BN254 *T, BIG_256_56 t1, BIG_256_56 *t2, schemeD_pk *public_ke
 }
 
 void PoK_prover_2(BIG_256_56 s1, BIG_256_56 *s2, BIG_256_56 c, BIG_256_56 t1, BIG_256_56 *t2, BIG_256_56 *message,
-                  PoK_proof *proof, schemeD_sig *sig) {
+                  PoK_randomness *proof, schemeD_sig *sig) {
 
     BIG_256_56 tmp;
 
@@ -168,16 +168,20 @@ int PoK_verifier(BIG_256_56 s1, BIG_256_56 *s2, BIG_256_56 c, FP12_BN254 *T, FP1
 
     FP12_BN254_equals(&lhs, &rhs) ? res++ : (res = 0);
 
-    int v = 0;
+    return res;
+}
 
-    for(int i = 0; i < public_key->l; i++) {
-        v += pairing_and_equality_check(&public_key->Z[i], &blind_sig->a, &public_key->g_2, &blind_sig->A[i]);
-        v += pairing_and_equality_check(&public_key->Y, &blind_sig->A[i], &public_key->g_2, &blind_sig->B[i]);
+int PoK_verify_pairings(schemeD_sig *blind_sig, schemeD_pk *pk) {
+    int v = 0, res = 0;
+
+    for(int i = 0; i < pk->l; i++) {
+        v += pairing_and_equality_check(&pk->Z[i], &blind_sig->a, &pk->g_2, &blind_sig->A[i]);
+        v += pairing_and_equality_check(&pk->Y, &blind_sig->A[i], &pk->g_2, &blind_sig->B[i]);
     }
 
-    if(v == public_key->l * 2) res++;
+    if(v == pk->l * 2) res++;
 
-    pairing_and_equality_check(&public_key->Y, &blind_sig->a, &public_key->g_2, &blind_sig->b) ? res++ : (res = 0);
+    pairing_and_equality_check(&pk->Y, &blind_sig->a, &pk->g_2, &blind_sig->b) ? res++ : (res = 0);
 
     return res;
 }

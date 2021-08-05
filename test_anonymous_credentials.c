@@ -9,6 +9,7 @@
 #include <ecdh_BN254.h>
 #include <commitment_schemes/PoK_signature/PoK_signature.h>
 #include <utils/utils.h>
+#include "assert.h"
 
 #define NUMBER_OF_MESSAGES 32
 
@@ -35,7 +36,7 @@ int execute_PoK_of_message_protocol_and_obtain_signature(schemeD_sig *sig, BIG_2
     prover_2(s, challenge, t, message, NUMBER_OF_MESSAGES);
 
     //Verifier(Given T, commitment and s verify PoK) -> 1 or 0
-    if( ! verifier(&T, &commitment, s, challenge, user_pk)) return 0;
+    assert(verifier(&T, &commitment, s, challenge, user_pk));
 
     ECP_BN254 converted_commitment;
 
@@ -46,8 +47,39 @@ int execute_PoK_of_message_protocol_and_obtain_signature(schemeD_sig *sig, BIG_2
     return 1;
 }
 
-void test_zkPoK(csprng *prng) {
-    int res = 0;
+void compute_blind_signature(schemeD_sig *blind_sig, schemeD_sig *sig, PoK_randomness *randomness, csprng *prng) {
+    PoK_compute_blind_signature(blind_sig, sig, randomness, prng);
+}
+
+int execute_PoK_of_signature_and_verify_pairings(schemeD_sig *sig, schemeD_pk *pk, PoK_randomness *randomness,
+                                                 BIG_256_56 *message, csprng *prng) {
+
+    FP12_BN254 commitment;
+
+    PoK_generate_commitment(&commitment, randomness, message, pk, sig);
+
+    FP12_BN254 T;
+    BIG_256_56 t1, t2[NUMBER_OF_MESSAGES], s1, s2[NUMBER_OF_MESSAGES], challenge;
+
+    //Generate T
+    PoK_prover_1(&T, t1, t2, pk, sig, prng);
+
+    //Generate challenge
+    BIG_256_56_random(challenge, prng);
+
+    //Generate s1, s1
+    PoK_prover_2(s1, s2, challenge, t1, t2, message, randomness, sig);
+
+    //Verify randomness
+    assert(PoK_verifier(s1, s2, challenge, &T, &commitment, pk, sig));
+
+    //Verify pairings
+    assert(PoK_verify_pairings(sig, pk));
+
+    return 1;
+}
+
+void test_anonymous_credentials(csprng *prng) {
 
     BIG_256_56 message[NUMBER_OF_MESSAGES], t[NUMBER_OF_MESSAGES], s[NUMBER_OF_MESSAGES], challenge_1;
 
@@ -69,44 +101,24 @@ void test_zkPoK(csprng *prng) {
     create_key_pair(&signer_sk, &signer_pk, prng, NUMBER_OF_MESSAGES);
 
     //Execute PoK of message protocol and obtain signature
-    schemeD_sig sig;
+    schemeD_sig sig, blind_sig;
     schemeD_init_signature(&sig, NUMBER_OF_MESSAGES);
-
-    execute_PoK_of_message_protocol_and_obtain_signature(&sig, message, &user_pk, &user_sk, &signer_sk, prng) ? res++ : (res = 0);
-
-    //Compute blind singature
-    schemeD_sig blind_sig;
     schemeD_init_signature(&blind_sig, NUMBER_OF_MESSAGES);
 
-    PoK_proof proof;
-    BIG_256_56_random(proof.r, prng);
+    assert(execute_PoK_of_message_protocol_and_obtain_signature(&sig, message, &user_pk, &user_sk, &signer_sk, prng));
 
-    PoK_compute_blind_signature(&blind_sig, &sig, &proof, prng);
+    PoK_randomness randomness;
+    BIG_256_56_random(randomness.r, prng);
 
-    FP12_BN254 commitment_2;
+    compute_blind_signature(&blind_sig, &sig, &randomness, prng);
 
-    PoK_generate_commitment(&commitment_2, &proof, message, &signer_pk, &blind_sig);
-
-    FP12_BN254 T_2;
-    BIG_256_56 t1;
-    BIG_256_56 t2[NUMBER_OF_MESSAGES];
-
-    PoK_prover_1(&T_2, t1, t2, &signer_pk, &blind_sig, prng);
-
-    BIG_256_56 s1, challenge_2;
-    BIG_256_56 s2[NUMBER_OF_MESSAGES];
-
-    BIG_256_56_random(challenge_2, prng);
-
-    PoK_prover_2(s1, s2, challenge_2, t1, t2, message, &proof, &blind_sig);
-
-    PoK_verifier(s1, s2, challenge_2, &T_2, &commitment_2, &signer_pk, &blind_sig) ? res++ : (res = 0);
-
-    res == 2 ? (printf("Success\n")) : (printf("Failure\n"));
+    assert(execute_PoK_of_signature_and_verify_pairings(&blind_sig, &signer_pk, &randomness, message, prng));// ? res++ : (res = 0);
 
     schemeD_destroy_keypair(&user_sk, &user_pk);
     schemeD_destroy_keypair(&signer_sk, &signer_pk);
     schemeD_destroy_signature(&sig);
+
+    printf("Success\n");
 }
 
 int main() {
@@ -130,8 +142,8 @@ int main() {
     //---------------------------------------------------
 
 
-    printf("Testing signature_on_committed_value_2...");
-    test_zkPoK(&prng);
+    printf("Testing anonymous credentials...");
+    test_anonymous_credentials(&prng);
 
     return 0;
 }
