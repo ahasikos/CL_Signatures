@@ -16,17 +16,13 @@
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCORE_LIB_PATH=/Users/alexandros/Desktop/repos/CL_Signatures/core" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a55e3cdc-0c2c-4fba-ba00-74ead5d02563" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.h" beforeDir="false" afterPath="$PROJECT_DIR$/commitment_schemes/PoK_signature/PoK_signature.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_cl_signatures.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_cl_signatures.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_zkPoK.c" beforeDir="false" afterPath="$PROJECT_DIR$/test_anonymous_credentials.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +68,7 @@
     <property name="cmake.loaded.for.project" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/signatures/scheme_D" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -183,7 +180,7 @@
       <workItem from="1626938605035" duration="15469000" />
       <workItem from="1627464953092" duration="17602000" />
       <workItem from="1627635251269" duration="2881000" />
-      <workItem from="1627994418857" duration="30719000" />
+      <workItem from="1627994418857" duration="30863000" />
     </task>
     <servers />
   </component>

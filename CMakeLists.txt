@@ -26,7 +26,7 @@ target_link_libraries(test_cl_signatures
         schemeB
         schemeC
         schemeD
-        ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
+        ${CORE_LIB_PATH}/c/core.a)
 
 add_executable(test_zkPoK test_anonymous_credentials.c)
 target_link_libraries(test_zkPoK
@@ -35,4 +35,4 @@ target_link_libraries(test_zkPoK
         sign_commitment
         schemeD
         utils
-        ${CMAKE_CURRENT_SOURCE_DIR}/core/c/core.a)
+        ${CORE_LIB_PATH}/c/core.a)
